@@ -42,13 +42,15 @@ export function usePrimitiveColor(baseColor: string | undefined, fallbackColor: 
   return useMemo(() => baseColor ?? fallbackColor, [baseColor, fallbackColor]);
 }
 
-export const PrimitiveRig = memo(function PrimitiveRig({
+import { forwardRef } from "react";
+
+export const PrimitiveRig = memo(forwardRef<THREE.Group, PrimitiveRigProps>(function PrimitiveRig({
   scale = 1,
   position = [0, 0, 0],
   rotation = [0, 0, 0],
   animation: motionOverrides,
   children,
-}: PrimitiveRigProps) {
+}, ref) {
   const reducedMotion = useReducedMotion();
   const group = useRef<THREE.Group>(null);
   const basePosition = useRef<PrimitiveVector3>(position);
@@ -94,12 +96,21 @@ export const PrimitiveRig = memo(function PrimitiveRig({
     );
   });
 
-  return (
-    <group ref={group} position={position} rotation={rotation} scale={scale}>
-      {children}
-    </group>
-  );
-});
+    return (
+      <group
+        ref={(node) => {
+          group.current = node;
+          if (typeof ref === "function") ref(node);
+          else if (ref) ref.current = node;
+        }}
+        position={position}
+        rotation={rotation}
+        scale={scale}
+      >
+        {children}
+      </group>
+    );
+}));
 
 export const primitiveMaterials = {
   shell: materials.shell,

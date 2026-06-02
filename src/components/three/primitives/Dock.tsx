@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function DockComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function DockComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shellDeep.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentSky.color);
   const detail = usePrimitiveColor(detailColor, "#968779");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <RoundedBox args={[2.48, 0.22, 0.96]} radius={0.16} smoothness={8}>
           <meshStandardMaterial color={shellColor} roughness={0.72} metalness={0.03} envMapIntensity={0.6} />
@@ -33,6 +35,6 @@ function DockComponent({ scale, position, rotation, bodyColor, accentColor, deta
   );
 }
 
-export const Dock = memo(DockComponent);
+export const Dock = memo(forwardRef(DockComponent));
 
 export type { PrimitiveProps as DockProps };

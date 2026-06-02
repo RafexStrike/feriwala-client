@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function GadgetComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function GadgetComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shellDeep.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentSky.color);
   const detail = usePrimitiveColor(detailColor, "#B0A294");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <RoundedBox args={[0.92, 0.92, 0.92]} radius={0.2} smoothness={6}>
           <meshStandardMaterial color={shellColor} roughness={0.58} metalness={0.03} envMapIntensity={0.55} />
@@ -39,6 +41,6 @@ function GadgetComponent({ scale, position, rotation, bodyColor, accentColor, de
   );
 }
 
-export const Gadget = memo(GadgetComponent);
+export const Gadget = memo(forwardRef(GadgetComponent));
 
 export type { PrimitiveProps as GadgetProps };

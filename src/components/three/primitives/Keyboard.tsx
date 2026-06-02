@@ -2,6 +2,8 @@
 
 import { memo, useMemo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { primitiveMaterials, PrimitiveRig, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
 type KeySpec = {
@@ -18,7 +20,7 @@ function Key({ position, size, rotation = [0, 0, 0], color }: KeySpec & { color:
   );
 }
 
-function KeyboardComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function KeyboardComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const keyColor = usePrimitiveColor(detailColor, "#D9D1C7");
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentSky.color);
@@ -47,7 +49,7 @@ function KeyboardComponent({ scale, position, rotation, bodyColor, accentColor, 
   );
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <RoundedBox args={[2.55, 0.28, 1.02]} radius={0.18} smoothness={8}>
           <meshStandardMaterial color={shellColor} roughness={0.8} metalness={0.03} envMapIntensity={0.65} />
@@ -75,6 +77,6 @@ function KeyboardComponent({ scale, position, rotation, bodyColor, accentColor, 
   );
 }
 
-export const Keyboard = memo(KeyboardComponent);
+export const Keyboard = memo(forwardRef(KeyboardComponent));
 
 export type { PrimitiveProps as KeyboardProps };

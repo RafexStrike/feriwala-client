@@ -1,12 +1,14 @@
 "use client";
 
 import { ContactShadows, Environment, Sparkles } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import * as THREE from "three";
 import { animation } from "@/config/animations";
+import { DEBUG_3D, FALLBACK_TEST } from "@/config/debug";
+import { PRIMITIVE_NORMALIZATION } from "@/config/objectSizing";
 import { palette, sceneSurfaces } from "@/config/materials";
 import type { SceneItem } from "@/config/three";
 import { Dock, Gadget, Hub, Keyboard, Lamp, Mouse, Speaker, ToolKit } from "./primitives";
@@ -39,6 +41,36 @@ function useCompactScreen() {
   return compactScreen;
 }
 
+function DebugInfo() {
+  useFrame(({ camera }) => {
+    if (DEBUG_3D) {
+      console.log(`Camera Position: ${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)}`);
+    }
+  });
+  return null;
+}
+
+function DebugBox({ objectRef }: { objectRef: React.RefObject<THREE.Group | null> }) {
+  const helperRef = useRef<THREE.BoxHelper>(null);
+
+  useEffect(() => {
+    if (!DEBUG_3D || !objectRef.current) return;
+    const helper = new THREE.BoxHelper(objectRef.current, 0xffff00);
+    helperRef.current = helper;
+    return () => {
+      helperRef.current?.dispose();
+    };
+  }, [objectRef]);
+
+  useFrame(() => {
+    if (helperRef.current) {
+      helperRef.current.update();
+    }
+  });
+
+  return <primitive object={helperRef.current || {}} />;
+}
+
 function SceneObject({
   item,
   index,
@@ -52,6 +84,7 @@ function SceneObject({
   lowCost: boolean;
   sceneSpread: number;
 }) {
+  const ref = useRef<THREE.Group>(null);
   const Primitive = primitiveMap[item.kind];
   const position = useMemo<[number, number, number]>(
     () => item.position.map((value) => value * sceneSpread) as [number, number, number],
@@ -72,55 +105,30 @@ function SceneObject({
   );
 
   return (
-    <Primitive
-      scale={item.scale}
-      position={position}
-      rotation={item.rotation}
-      bodyColor={sceneSurfaces.canvas}
-      accentColor={item.color}
-      detailColor={palette.shadow}
-      animation={animationProps}
-    />
+    <>
+      {FALLBACK_TEST ? (
+        <mesh ref={ref} position={position}>
+          <boxGeometry args={[2, 2, 2]} />
+          <meshStandardMaterial color="hotpink" />
+        </mesh>
+      ) : (
+        <Primitive
+          ref={ref}
+          scale={item.scale * (PRIMITIVE_NORMALIZATION[item.kind] ?? 1)}
+          position={position}
+          rotation={item.rotation}
+          bodyColor={sceneSurfaces.canvas}
+          accentColor={item.color}
+          detailColor={palette.shadow}
+          animation={animationProps}
+        />
+      )}
+      {DEBUG_3D && <DebugBox objectRef={ref} />}
+    </>
   );
 }
 
-function SceneStage({
-  children,
-  progress,
-  background = sceneSurfaces.canvas,
-  reducedMotion,
-  lowCost,
-}: {
-  children: ReactNode;
-  progress: number;
-  background?: string;
-  reducedMotion: boolean;
-  lowCost: boolean;
-}) {
-  const spreadRotation = THREE.MathUtils.lerp(0.12, 0.04, progress);
-
-  return (
-    <Canvas
-      camera={{ position: [0, 0, 7.4], fov: 38 }}
-      dpr={lowCost ? [1, 1.15] : [1, 1.65]}
-      gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
-      shadows={false}
-    >
-      <color attach="background" args={[background]} />
-      <fog attach="fog" args={[background, 9, 18]} />
-      <ambientLight intensity={1.15} />
-      <directionalLight position={[5, 6, 5]} intensity={2.4} color="#FFF1E4" />
-      <directionalLight position={[-4, -2, 4]} intensity={0.82} color={palette.sky} />
-      <directionalLight position={[0, 4, -3]} intensity={0.55} color={palette.clay} />
-      <group position={[0, 0, 0]} rotation={[0.05, spreadRotation, 0]}>
-        {children}
-      </group>
-      <ContactShadows opacity={0.22} scale={9} blur={2.5} far={5.5} resolution={lowCost ? 128 : 256} color={palette.shadow} />
-      {lowCost || reducedMotion ? null : <Environment preset="studio" />}
-      {lowCost || reducedMotion ? null : <Sparkles count={18} size={1.8} scale={6} speed={0.26} color={palette.honey} />}
-    </Canvas>
-  );
-}
+import { SceneFrame } from "./SceneFrame";
 
 export function SceneFallback({ title }: { title: string }) {
   return (
@@ -153,7 +161,7 @@ export function UniverseCanvas({
     : animation.scene.spreadStart;
 
   return (
-    <SceneStage progress={progress} background={background} reducedMotion={reducedMotion} lowCost={lowCost}>
+    <SceneFrame progress={progress} background={background} reducedMotion={reducedMotion} lowCost={lowCost}>
       {items.map((item, index) => (
         <SceneObject
           key={item.id}
@@ -164,6 +172,6 @@ export function UniverseCanvas({
           sceneSpread={sceneSpread}
         />
       ))}
-    </SceneStage>
+    </SceneFrame>
   );
 }

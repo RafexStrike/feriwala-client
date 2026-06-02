@@ -1,10 +1,13 @@
 import { homepageContent } from "@/content/homepage";
-import { SceneSlot } from "@/components/three/SceneSlot";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Categories() {
   return (
-    <section className="relative overflow-hidden border-y border-line/70 bg-surface/50 py-[clamp(5rem,9vw,8rem)]">
+    <section className="relative overflow-hidden border-y border-line/70 bg-gradient-to-b from-white via-surface/30 to-canvas/20 py-[clamp(5rem,9vw,8rem)]">
+      {/* Decorative elements */}
+      <div className="absolute left-0 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-gradient-to-r from-clay/5 to-transparent blur-3xl" />
+
       <div className="mx-auto grid w-[min(1180px,calc(100vw-2rem))] gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
         <div data-reveal>
           <p className="text-xs uppercase tracking-[0.32em] text-muted">{homepageContent.categories.eyebrow}</p>
@@ -34,7 +37,16 @@ export function Categories() {
             ))}
           </div>
         </div>
-        <SceneSlot scene="category-galaxy" fallbackTitle="A category constellation" className="min-h-[26rem] lg:min-h-[42rem]" />
+
+        <div data-reveal className="relative rounded-[2.5rem] overflow-hidden border border-line/30 bg-gradient-to-br from-surface/40 to-canvas/30 min-h-[26rem] lg:min-h-[42rem]">
+          <Image
+            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80"
+            alt="Product categories showcase"
+            fill
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/30 via-transparent to-transparent" />
+        </div>
       </div>
     </section>
   );

@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function SpeakerComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function SpeakerComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentHoney.color);
   const detail = usePrimitiveColor(detailColor, "#A79A8B");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <mesh>
           <cylinderGeometry args={[0.56, 0.58, 1.56, 28]} />
@@ -44,6 +46,6 @@ function SpeakerComponent({ scale, position, rotation, bodyColor, accentColor, d
   );
 }
 
-export const Speaker = memo(SpeakerComponent);
+export const Speaker = memo(forwardRef(SpeakerComponent));
 
 export type { PrimitiveProps as SpeakerProps };

@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function LampComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function LampComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.glowHoney.color);
   const detail = usePrimitiveColor(detailColor, "#9C8E80");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <mesh position={[0, -0.56, 0]}>
           <cylinderGeometry args={[0.54, 0.6, 0.18, 28]} />
@@ -40,6 +42,6 @@ function LampComponent({ scale, position, rotation, bodyColor, accentColor, deta
   );
 }
 
-export const Lamp = memo(LampComponent);
+export const Lamp = memo(forwardRef(LampComponent));
 
 export type { PrimitiveProps as LampProps };

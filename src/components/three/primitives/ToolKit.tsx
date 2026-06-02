@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function ToolKitComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function ToolKitComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentClay.color);
   const detail = usePrimitiveColor(detailColor, "#9D8E81");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <RoundedBox args={[1.58, 0.16, 0.98]} radius={0.1} smoothness={6} position={[0, -0.48, 0]}>
           <meshStandardMaterial color={shellColor} roughness={0.76} metalness={0.02} />
@@ -42,6 +44,6 @@ function ToolKitComponent({ scale, position, rotation, bodyColor, accentColor, d
   );
 }
 
-export const ToolKit = memo(ToolKitComponent);
+export const ToolKit = memo(forwardRef(ToolKitComponent));
 
 export type { PrimitiveProps as ToolKitProps };

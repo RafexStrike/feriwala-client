@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function HubComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function HubComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentHoney.color);
   const detail = usePrimitiveColor(detailColor, "#968879");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <RoundedBox args={[1.9, 0.42, 0.96]} radius={0.16} smoothness={8}>
           <meshStandardMaterial color={shellColor} roughness={0.68} metalness={0.03} envMapIntensity={0.56} />
@@ -30,9 +32,6 @@ function HubComponent({ scale, position, rotation, bodyColor, accentColor, detai
         <RoundedBox args={[0.18, 0.1, 0.1]} radius={0.03} smoothness={4} position={[0.28, -0.03, 0.46]}>
           <meshStandardMaterial color={detail} roughness={0.44} metalness={0.02} />
         </RoundedBox>
-        <RoundedBox args={[0.18, 0.1, 0.1]} radius={0.03} smoothness={4} position={[0.58, -0.03, 0.46]}>
-          <meshStandardMaterial color={detail} roughness={0.44} metalness={0.02} />
-        </RoundedBox>
         <RoundedBox args={[0.18, 0.1, 0.1]} radius={0.03} smoothness={4} position={[0.62, 0.16, 0.05]}>
           <meshStandardMaterial color={primitiveMaterials.glowSky.color} roughness={0.3} metalness={0.02} emissive={primitiveMaterials.glowSky.color} emissiveIntensity={0.14} />
         </RoundedBox>
@@ -41,6 +40,6 @@ function HubComponent({ scale, position, rotation, bodyColor, accentColor, detai
   );
 }
 
-export const Hub = memo(HubComponent);
+export const Hub = memo(forwardRef(HubComponent));
 
 export type { PrimitiveProps as HubProps };

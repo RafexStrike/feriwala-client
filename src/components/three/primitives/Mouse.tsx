@@ -2,15 +2,17 @@
 
 import { memo } from "react";
 import { RoundedBox } from "@react-three/drei";
+import { forwardRef } from "react";
+import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function MouseComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps) {
+function MouseComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shellDeep.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentClay.color);
   const detail = usePrimitiveColor(detailColor, "#9F9183");
 
   return (
-    <PrimitiveRig scale={scale} position={position} rotation={rotation} animation={animation}>
+    <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
       <group>
         <mesh rotation={[0, 0, Math.PI / 2]} position={[0, 0.02, 0]}>
           <capsuleGeometry args={[0.39, 1.02, 10, 18]} />
@@ -32,6 +34,6 @@ function MouseComponent({ scale, position, rotation, bodyColor, accentColor, det
   );
 }
 
-export const Mouse = memo(MouseComponent);
+export const Mouse = memo(forwardRef(MouseComponent));
 
 export type { PrimitiveProps as MouseProps };
