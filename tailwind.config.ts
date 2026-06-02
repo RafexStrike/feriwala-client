@@ -15,8 +15,8 @@ const config: Config = {
         honey: "#d2926f",
       },
       fontFamily: {
-        display: ['"Instrument Serif"', "Georgia", "serif"],
-        sans: ['"Satoshi"', "Inter", "system-ui", "sans-serif"],
+        display: ['var(--font-instrument-serif)', "Georgia", "serif"],
+        sans: ['var(--font-satoshi)', "system-ui", "sans-serif"],
       },
       boxShadow: {
         soft: "0 18px 60px rgba(23, 20, 16, 0.08)",

@@ -9,7 +9,6 @@ export type ProductCard = {
   summary: string;
   accent: string;
   chips: string[];
-  modelUrl?: string;
 };
 
 export const featuredProducts: ProductCard[] = [

@@ -1,5 +1,6 @@
 "use client";
 
+import { animation } from "@/config/animations";
 import { formationItems } from "@/config/three";
 import { UniverseCanvas } from "./shared";
 
@@ -13,9 +14,9 @@ export default function FormationScene({
   return (
     <UniverseCanvas
       items={formationItems}
-      progress={reducedMotion ? 0.7 : progress}
+      progress={reducedMotion ? animation.formation.settleProgress : progress}
       animated={!reducedMotion}
-      background="#f3ede3"
+      background="#F7F5F2"
       reducedMotion={reducedMotion}
     />
   );

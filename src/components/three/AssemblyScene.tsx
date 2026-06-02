@@ -1,5 +1,6 @@
 "use client";
 
+import { animation } from "@/config/animations";
 import { assemblyItems } from "@/config/three";
 import { UniverseCanvas } from "./shared";
 
@@ -13,9 +14,9 @@ export default function AssemblyScene({
   return (
     <UniverseCanvas
       items={assemblyItems}
-      progress={reducedMotion ? 0.72 : progress}
+      progress={reducedMotion ? animation.assembly.settleProgress : progress}
       animated={!reducedMotion}
-      background="#f6f0e8"
+      background="#F4EFE8"
       reducedMotion={reducedMotion}
     />
   );

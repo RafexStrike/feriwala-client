@@ -1,5 +1,6 @@
 "use client";
 
+import { animation } from "@/config/animations";
 import { marketplaceExplosionItems } from "@/config/three";
 import { UniverseCanvas } from "./shared";
 
@@ -13,9 +14,9 @@ export default function MarketplaceExplosionScene({
   return (
     <UniverseCanvas
       items={marketplaceExplosionItems}
-      progress={reducedMotion ? 0.5 : progress}
+      progress={reducedMotion ? animation.scene.spreadEnd + 0.12 : progress}
       animated={!reducedMotion}
-      background="#f4efe6"
+      background="#F3EBDD"
       reducedMotion={reducedMotion}
     />
   );

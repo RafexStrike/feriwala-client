@@ -1,5 +1,6 @@
 "use client";
 
+import { animation } from "@/config/animations";
 import { categoryGalaxyItems } from "@/config/three";
 import { UniverseCanvas } from "./shared";
 
@@ -13,9 +14,9 @@ export default function CategoryGalaxyScene({
   return (
     <UniverseCanvas
       items={categoryGalaxyItems}
-      progress={reducedMotion ? 0.44 : progress}
+      progress={reducedMotion ? animation.scene.spreadEnd + 0.06 : progress}
       animated={!reducedMotion}
-      background="#f6f0e8"
+      background="#F4EFE8"
       reducedMotion={reducedMotion}
     />
   );

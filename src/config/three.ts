@@ -10,7 +10,6 @@ export type SceneItem = {
   position: [number, number, number];
   rotation: [number, number, number];
   scale: number;
-  modelUrl?: string;
 };
 
 export const floatingUniverseItems: SceneItem[] = featuredProducts.slice(0, 6).map((product, index) => ({
@@ -51,7 +50,13 @@ export const assemblyItems: SceneItem[] = featuredProducts.slice(0, 5).map((prod
     [0, 0, 0],
     [1.4, -0.5, 0.2],
   ][index] as [number, number, number],
-  rotation: [[0.25, -0.3, -0.15], [0.1, 0.2, 0.1], [-0.2, 0.45, -0.1], [0.35, -0.15, 0.1], [-0.15, 0.3, 0.2]][index] as [number, number, number],
+  rotation: [
+    [0.25, -0.3, -0.15],
+    [0.1, 0.2, 0.1],
+    [-0.2, 0.45, -0.1],
+    [0.35, -0.15, 0.1],
+    [-0.15, 0.3, 0.2],
+  ][index] as [number, number, number],
   scale: [1, 0.85, 0.74, 0.66, 0.56][index],
 }));
 
@@ -86,7 +91,16 @@ export const marketplaceExplosionItems: SceneItem[] = featuredProducts.map((prod
     [-0.4, 2.1, -0.25],
     [1.1, -0.2, 1.1],
   ][index] as [number, number, number],
-  rotation: [[0.15, 0.12, 0], [0.25, -0.2, 0.1], [-0.3, 0.35, -0.05], [0.05, -0.24, 0.14], [0.2, 0.5, 0.12], [-0.1, -0.35, 0.1], [0.4, 0.14, -0.18], [0.3, -0.2, 0.25]][index] as [number, number, number],
+  rotation: [
+    [0.15, 0.12, 0],
+    [0.25, -0.2, 0.1],
+    [-0.3, 0.35, -0.05],
+    [0.05, -0.24, 0.14],
+    [0.2, 0.5, 0.12],
+    [-0.1, -0.35, 0.1],
+    [0.4, 0.14, -0.18],
+    [0.3, -0.2, 0.25],
+  ][index] as [number, number, number],
   scale: [1.1, 0.92, 0.84, 0.66, 0.6, 0.64, 0.56, 0.5][index],
 }));
 
