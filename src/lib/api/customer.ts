@@ -1,0 +1,113 @@
+import { apiClient, buildProductQuery, fetchWithAuth } from './client';
+import {
+  ProductBrief,
+  ProductDetail,
+  ProductCreateInput,
+  ProductUpdateInput,
+  Category,
+  Tag,
+  CategoryInput,
+  TagInput,
+  Cart,
+  CartItem,
+  Order,
+  Review,
+  User,
+  CheckoutData,
+  ReviewInput,
+  AddToCartInput,
+  UpdateCartInput,
+} from "@/types/api";
+import type { ProductQueryParams } from "./types";
+
+export type {
+  ProductQueryParams,
+  ProductBrief,
+  ProductDetail,
+  ProductCreateInput,
+  ProductUpdateInput,
+  Category,
+  Tag,
+  CategoryInput,
+  TagInput,
+  Cart,
+  CartItem,
+  Order,
+  Review,
+  User,
+  CheckoutData,
+  ReviewInput,
+  AddToCartInput,
+  UpdateCartInput,
+};
+
+// Products
+export async function getProducts(params: ProductQueryParams = {}) {
+  const query = buildProductQuery(params);
+  const response = await fetchWithAuth<{ data: ProductBrief[]; pagination: any }>(`/products?${query}`);
+  return response;
+}
+
+export async function getProduct(productId: string) {
+  return apiClient.get<ProductDetail>(`/products/${productId}`);
+}
+
+export async function getProductReviews(productId: string) {
+  return apiClient.get<Review[]>(`/products/${productId}/reviews`);
+}
+
+export async function createReview(productId: string, data: ReviewInput) {
+  return apiClient.post<Review>(`/products/${productId}/reviews`, data);
+}
+
+export async function deleteReview(productId: string) {
+  return apiClient.delete<{ message: string }>(`/products/${productId}/reviews`);
+}
+
+// Categories & Tags
+export async function getCategories() {
+  return apiClient.get<Category[]>(`/categories`);
+}
+
+export async function getTags() {
+  return apiClient.get<Tag[]>(`/tags`);
+}
+
+// Cart
+export async function getCart() {
+  return apiClient.get<Cart>(`/cart`);
+}
+
+export async function addToCart(data: AddToCartInput) {
+  return apiClient.post<Cart>(`/cart/items`, data);
+}
+
+export async function updateCartItem(productId: string, data: UpdateCartInput) {
+  return apiClient.patch<Cart>(`/cart/items/${productId}`, data);
+}
+
+export async function removeCartItem(productId: string) {
+  return apiClient.delete<Cart>(`/cart/items/${productId}`);
+}
+
+export async function clearCart() {
+  return apiClient.delete<{ message: string }>(`/cart`);
+}
+
+// Orders
+export async function createOrder(data: CheckoutData) {
+  return apiClient.post<Order>(`/orders`, data);
+}
+
+export async function getOrders() {
+  return apiClient.get<Order[]>(`/orders`);
+}
+
+export async function getOrder(orderId: string) {
+  return apiClient.get<Order>(`/orders/${orderId}`);
+}
+
+// Auth / User
+export async function getMe() {
+  return apiClient.get<User>(`/users/me`);
+}

@@ -5,6 +5,9 @@ import Lenis from "lenis";
 import { ReactNode, useEffect } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
+import { QueryProvider } from "@/components/providers/QueryProvider";
+import { AuthProvider } from "@/lib/auth/AuthProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,5 +38,14 @@ export function RootProviders({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+  return (
+    <QueryProvider>
+      <AuthProvider>
+        <MotionConfig reducedMotion="user">
+          {children}
+        </MotionConfig>
+        <Toaster />
+      </AuthProvider>
+    </QueryProvider>
+  );
 }
