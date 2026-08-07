@@ -42,10 +42,31 @@ export type {
 };
 
 // Products
+// Products
 export async function getProducts(params: ProductQueryParams = {}) {
   const query = buildProductQuery(params);
-  const response = await fetchWithAuth<{ data: ProductBrief[]; pagination: any }>(`/products?${query}`);
-  return response;
+  const response = await apiClient.get<any>(`/products?${query}`);
+  
+  // Handle the response structure from the backend
+  // Backend returns: { success: true, data: [...products...], pagination: {...} }
+  if (response && typeof response === 'object' && 'data' in response) {
+    return {
+      data: response.data || [],
+      pagination: response.pagination || { page: 1, limit: 12, total: 0, pages: 0 }
+    };
+  }
+  
+  if (Array.isArray(response)) {
+    return {
+      data: response,
+      pagination: { page: 1, limit: 12, total: response.length, pages: 1 }
+    };
+  }
+  
+  return {
+    data: [],
+    pagination: { page: 1, limit: 12, total: 0, pages: 0 }
+  };
 }
 
 export async function getProduct(productId: string) {

@@ -23,7 +23,7 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
     <Link
       href={`/products/${product._id}`}
       className={cn(
-        "group flex h-full flex-col rounded-[1.75rem] border border-line bg-surface p-5 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15",
+        "group flex h-full flex-col rounded-[1.75rem] border border-line bg-surface p-5 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15 overflow-hidden",
         className
       )}
     >
@@ -35,7 +35,7 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
       </div>
       <div className="mt-5 flex flex-1 flex-col">
         <div
-          className="mb-6 aspect-[4/3] rounded-[1.35rem] border border-line/70 bg-gradient-to-br"
+          className="mb-6 aspect-[4/3] relative overflow-hidden rounded-[1.35rem] border border-line/70 bg-gradient-to-br"
           style={{
             backgroundImage: image
               ? `url(${image})`
