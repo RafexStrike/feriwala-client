@@ -22,7 +22,7 @@ function CartItemComponent({ item, onQuantityChange, onRemove }: CartItemProps) 
   const image = product.images[0];
 
   return (
-    <div className="flex gap-4 p-4 rounded-xl border border-line bg-surface">
+    <div className="flex gap-4 p-4 rounded-xl border border-line/50 bg-surface/80 shadow-sm">
       <div className="relative h-24 w-24 flex-shrink-0 rounded-lg overflow-hidden bg-canvas">
         {image ? (
           <img src={image} alt={product.name} className="h-full w-full object-cover" />

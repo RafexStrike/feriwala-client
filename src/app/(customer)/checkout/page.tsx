@@ -52,7 +52,7 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
         customerEmail: data.customerEmail || undefined,
         notes: data.notes || undefined,
       });
-      router.push(`/orders/${order._id}?success=true`);
+      router.push(`/orders/success?orderId=${order._id}&redirect=/products`);
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to place order");
     }
