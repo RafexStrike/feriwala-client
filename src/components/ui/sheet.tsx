@@ -31,7 +31,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
-  "fixed z-50 gap-4 bg-oklch(1 0 0) p-6 shadow-lg transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out dark:bg-oklch(0.145 0 0)",
+  "fixed z-50 gap-4 bg-surface p-6 shadow-soft transition ease-in-out data-[state=closed]:duration-300 data-[state=open]:duration-500 data-[state=open]:animate-in data-[state=closed]:animate-out",
   {
     variants: {
       side: {
@@ -57,14 +57,14 @@ const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
 >(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
+    <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
       className={cn(sheetVariants({ side }), className)}
       {...props}
     >
-      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-oklch(1 0 0) transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-oklch(0.708 0 0) focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-oklch(0.97 0 0) dark:ring-offset-oklch(0.145 0 0) dark:focus:ring-oklch(0.556 0 0) dark:data-[state=open]:bg-oklch(0.269 0 0)">
+      <SheetPrimitive.Close className="absolute right-4 top-4 rounded-full p-2 text-muted hover:text-ink hover:bg-surface/60 transition-all">
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </SheetPrimitive.Close>
@@ -108,7 +108,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold text-oklch(0.145 0 0) dark:text-oklch(0.985 0 0)", className)}
+    className={cn("text-lg font-semibold text-ink", className)}
     {...props}
   />
 ))
@@ -120,7 +120,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-oklch(0.556 0 0) dark:text-oklch(0.708 0 0)", className)}
+    className={cn("text-sm text-muted", className)}
     {...props}
   />
 ))

@@ -123,7 +123,7 @@ export function CartSidebar() {
                 <div key={i} className="h-24 bg-canvas/60 rounded-lg" />
               ))}
             </div>
-          ) : cart?.items.length === 0 ? (
+          ) : cart?.items?.length === 0 ? (
             <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
               <div className="w-20 h-20 rounded-full bg-sky/10 flex items-center justify-center mb-4">
                 <Inbox className="h-10 w-10 text-sky" />
@@ -151,7 +151,7 @@ export function CartSidebar() {
           )}
 
           {/* Pricing Section */}
-          {cart?.items.length > 0 && (
+          {(cart?.items?.length ?? 0) > 0 && (
             <div className="bg-canvas/40 border-t-2 border-sky/10 px-6 py-5 space-y-4">
               {/* Subtotal */}
               <div className="flex justify-between items-center">
