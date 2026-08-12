@@ -75,7 +75,7 @@ function OrderCard({ order }: { order: Order }) {
   const itemCount = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <Link href={`/orders/${order._id}`} className="block">
+    <Link href={`/orders/৳{order._id}`} className="block">
       <article className="rounded-[1.5rem] border border-line bg-surface p-5 hover:border-ink/15 transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="flex items-center gap-4">

@@ -79,7 +79,7 @@ export default function InventoryPage() {
               header: "Rating",
               render: (item) => (
                 <span className="text-muted">
-                  {item.averageRating > 0 ? `${item.averageRating.toFixed(1)} (${item.reviewCount})` : "No reviews"}
+                  {item.averageRating > 0 ? `৳{item.averageRating.toFixed(1)} (৳{item.reviewCount})` : "No reviews"}
                 </span>
               ),
             },

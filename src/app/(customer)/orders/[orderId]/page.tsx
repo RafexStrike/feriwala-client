@@ -200,7 +200,7 @@ function OrderSummary({ subtotal, shipping, total, notes }: { subtotal: number; 
           <span className="text-muted">Shipping</span>
           <span className="font-medium text-ink">
             {shipping === 0 ? "Free" : formatCurrency(shipping)}
-            {subtotal > 0 && subtotal < 100 && <span className="ml-2 text-xs text-muted">(Free over $100)</span>}
+            {subtotal > 0 && subtotal < 100 && <span className="ml-2 text-xs text-muted">(Free over ৳100)</span>}
           </span>
         </div>
         <Separator />

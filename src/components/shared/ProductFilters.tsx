@@ -102,7 +102,7 @@ export function ProductFilters({
           {categories.map((category) => (
             <label key={category._id} className="flex items-center gap-2 cursor-pointer">
               <Checkbox
-                id={`category-${category._id}`}
+                id={`category-৳{category._id}`}
                 checked={selectedCategory === category._id}
                 onCheckedChange={(checked) => onCategoryChange(checked ? category._id : "")}
               />
@@ -126,7 +126,7 @@ export function ProductFilters({
           {tags.map((tag) => (
             <label key={tag._id} className="flex items-center gap-2 cursor-pointer">
               <Checkbox
-                id={`tag-${tag._id}`}
+                id={`tag-৳{tag._id}`}
                 checked={selectedTag === tag._id}
                 onCheckedChange={(checked) => onTagChange(checked ? tag._id : "")}
               />

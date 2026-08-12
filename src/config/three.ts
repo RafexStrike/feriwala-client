@@ -38,7 +38,7 @@ export const floatingUniverseItems: SceneItem[] = featuredProducts.slice(0, 6).m
 }));
 
 export const assemblyItems: SceneItem[] = featuredProducts.slice(0, 5).map((product, index) => ({
-  id: `assembly-${product.slug}`,
+  id: `assembly-৳{product.slug}`,
   label: product.name,
   kind: index === 0 ? "keyboard" : index === 1 ? "dock" : index === 2 ? "lamp" : index === 3 ? "mouse" : "gadget",
   color: product.accent,
@@ -76,7 +76,7 @@ export const categoryGalaxyItems: SceneItem[] = categories.map((category, index)
 }));
 
 export const marketplaceExplosionItems: SceneItem[] = featuredProducts.map((product, index) => ({
-  id: `market-${product.slug}`,
+  id: `market-৳{product.slug}`,
   label: product.name,
   kind: index % 3 === 0 ? "hub" : index % 3 === 1 ? "tool" : "gadget",
   color: product.accent,
@@ -105,7 +105,7 @@ export const marketplaceExplosionItems: SceneItem[] = featuredProducts.map((prod
 }));
 
 export const formationItems: SceneItem[] = featuredProducts.slice(0, 6).map((product, index) => ({
-  id: `formation-${product.slug}`,
+  id: `formation-৳{product.slug}`,
   label: product.name,
   kind: index === 0 ? "keyboard" : index === 1 ? "mouse" : index === 2 ? "speaker" : index === 3 ? "hub" : index === 4 ? "tool" : "gadget",
   color: product.accent,

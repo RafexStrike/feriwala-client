@@ -44,7 +44,7 @@ export default function EditProductPage() {
     <div>
       <AdminHeader
         title="Edit Product"
-        description={`Editing ${product.name}`}
+        description={`Editing ৳{product.name}`}
       />
       <div className="max-w-2xl">
         <ProductForm product={product} mode="edit" />

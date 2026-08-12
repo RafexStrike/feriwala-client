@@ -45,7 +45,7 @@ export type {
 // Products
 export async function getProducts(params: ProductQueryParams = {}) {
   const query = buildProductQuery(params);
-  const response = await apiClient.get<any>(`/products?${query}`);
+  const response = await apiClient.get<any>(`/products?৳{query}`);
   
   // Handle the response structure from the backend
   // Backend returns: { success: true, data: [...products...], pagination: {...} }
@@ -70,19 +70,19 @@ export async function getProducts(params: ProductQueryParams = {}) {
 }
 
 export async function getProduct(productId: string) {
-  return apiClient.get<ProductDetail>(`/products/${productId}`);
+  return apiClient.get<ProductDetail>(`/products/৳{productId}`);
 }
 
 export async function getProductReviews(productId: string) {
-  return apiClient.get<Review[]>(`/products/${productId}/reviews`);
+  return apiClient.get<Review[]>(`/products/৳{productId}/reviews`);
 }
 
 export async function createReview(productId: string, data: ReviewInput) {
-  return apiClient.post<Review>(`/products/${productId}/reviews`, data);
+  return apiClient.post<Review>(`/products/৳{productId}/reviews`, data);
 }
 
 export async function deleteReview(productId: string) {
-  return apiClient.delete<{ message: string }>(`/products/${productId}/reviews`);
+  return apiClient.delete<{ message: string }>(`/products/৳{productId}/reviews`);
 }
 
 // Categories & Tags
@@ -104,11 +104,11 @@ export async function addToCart(data: AddToCartInput) {
 }
 
 export async function updateCartItem(productId: string, data: UpdateCartInput) {
-  return apiClient.patch<Cart>(`/cart/items/${productId}`, data);
+  return apiClient.patch<Cart>(`/cart/items/৳{productId}`, data);
 }
 
 export async function removeCartItem(productId: string) {
-  return apiClient.delete<Cart>(`/cart/items/${productId}`);
+  return apiClient.delete<Cart>(`/cart/items/৳{productId}`);
 }
 
 export async function clearCart() {
@@ -125,7 +125,7 @@ export async function getOrders() {
 }
 
 export async function getOrder(orderId: string) {
-  return apiClient.get<Order>(`/orders/${orderId}`);
+  return apiClient.get<Order>(`/orders/৳{orderId}`);
 }
 
 // Auth / User

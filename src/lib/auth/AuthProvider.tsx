@@ -17,9 +17,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://feriwala-server.onrender.com/api/v1';
 // auth routes live under /api/auth (no v1 prefix)
-const AUTH_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const AUTH_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://feriwala-server.onrender.com';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch(`${API_BASE}/users/me`, {
+      const response = await fetch(`৳{API_BASE}/users/me`, {
         credentials: 'include',
       });
       
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await fetch(`${AUTH_BASE}/api/auth/sign-in/email`, {
+    const response = await fetch(`৳{AUTH_BASE}/api/auth/sign-in/email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const response = await fetch(`${AUTH_BASE}/api/auth/sign-up/email`, {
+    const response = await fetch(`৳{AUTH_BASE}/api/auth/sign-up/email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await fetch(`${AUTH_BASE}/api/auth/sign-out`, {
+    await fetch(`৳{AUTH_BASE}/api/auth/sign-out`, {
       method: 'POST',
       credentials: 'include',
     });

@@ -280,26 +280,26 @@ interface OrderStatusHistory {
 ## End-to-End User Flows
 
 ### 1. Onboarding & Authentication
-**UI Action** $\rightarrow$ **API Call** $\rightarrow$ **Backend Behavior** $\rightarrow$ **Response** $\rightarrow$ **Frontend Update**
-- Register $\rightarrow$ `POST /api/auth/sign-up` $\rightarrow$ Creates user, sends verification email $\rightarrow$ `200 OK` $\rightarrow$ Show "Verify Email" screen.
-- Verify Email $\rightarrow$ `GET /api/auth/verify-email?token=...` $\rightarrow$ Sets `emailVerified: true` $\rightarrow$ `200 OK` $\rightarrow$ Redirect to Home.
-- Login $\rightarrow$ `POST /api/auth/sign-in/email` $\rightarrow$ Validates credentials, creates session cookie $\rightarrow$ `200 OK` $\rightarrow$ Store user state, redirect to Home.
-- Logout $\rightarrow$ `POST /api/auth/sign-out` $\rightarrow$ Destroys session $\rightarrow$ `200 OK` $\rightarrow$ Clear user state, redirect to Login.
+**UI Action** ৳\rightarrow৳ **API Call** ৳\rightarrow৳ **Backend Behavior** ৳\rightarrow৳ **Response** ৳\rightarrow৳ **Frontend Update**
+- Register ৳\rightarrow৳ `POST /api/auth/sign-up` ৳\rightarrow৳ Creates user, sends verification email ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Show "Verify Email" screen.
+- Verify Email ৳\rightarrow৳ `GET /api/auth/verify-email?token=...` ৳\rightarrow৳ Sets `emailVerified: true` ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Redirect to Home.
+- Login ৳\rightarrow৳ `POST /api/auth/sign-in/email` ৳\rightarrow৳ Validates credentials, creates session cookie ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Store user state, redirect to Home.
+- Logout ৳\rightarrow৳ `POST /api/auth/sign-out` ৳\rightarrow৳ Destroys session ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Clear user state, redirect to Login.
 
 ### 2. Product Discovery
-- Browse $\rightarrow$ `GET /api/v1/products` $\rightarrow$ Fetches active products with pagination $\rightarrow$ `200 OK` $\rightarrow$ Render product grid.
-- Search $\rightarrow$ `GET /api/v1/products?search=...` $\rightarrow$ Regex search on name/description $\rightarrow$ `200 OK` $\rightarrow$ Update product grid.
-- Filter $\rightarrow$ `GET /api/v1/products?categoryId=...` $\rightarrow$ Filters by category ID $\rightarrow$ `200 OK` $\rightarrow$ Update product grid.
-- View $\rightarrow$ `GET /api/v1/products/:id` $\rightarrow$ Fetches full details + reviews $\rightarrow$ `200 OK` $\rightarrow$ Render product page.
+- Browse ৳\rightarrow৳ `GET /api/v1/products` ৳\rightarrow৳ Fetches active products with pagination ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Render product grid.
+- Search ৳\rightarrow৳ `GET /api/v1/products?search=...` ৳\rightarrow৳ Regex search on name/description ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Update product grid.
+- Filter ৳\rightarrow৳ `GET /api/v1/products?categoryId=...` ৳\rightarrow৳ Filters by category ID ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Update product grid.
+- View ৳\rightarrow৳ `GET /api/v1/products/:id` ৳\rightarrow৳ Fetches full details + reviews ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Render product page.
 
 ### 3. Purchase Process
-- Add to Cart $\rightarrow$ `POST /api/v1/cart/items` $\rightarrow$ Checks stock, adds to Cart model $\rightarrow$ `201 Created` $\rightarrow$ Update cart badge, show toast.
-- Manage Cart $\rightarrow$ `PATCH /api/v1/cart/items/:id` $\rightarrow$ Updates quantity, checks stock $\rightarrow$ `200 OK` $\rightarrow$ Update cart totals.
-- Checkout $\rightarrow$ `POST /api/v1/orders` $\rightarrow$ Atomic transaction: deducts stock, creates Order, clears Cart $\rightarrow$ `201 Created` $\rightarrow$ Redirect to Success page.
+- Add to Cart ৳\rightarrow৳ `POST /api/v1/cart/items` ৳\rightarrow৳ Checks stock, adds to Cart model ৳\rightarrow৳ `201 Created` ৳\rightarrow৳ Update cart badge, show toast.
+- Manage Cart ৳\rightarrow৳ `PATCH /api/v1/cart/items/:id` ৳\rightarrow৳ Updates quantity, checks stock ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Update cart totals.
+- Checkout ৳\rightarrow৳ `POST /api/v1/orders` ৳\rightarrow৳ Atomic transaction: deducts stock, creates Order, clears Cart ৳\rightarrow৳ `201 Created` ৳\rightarrow৳ Redirect to Success page.
 
 ### 4. Post-Purchase
-- History $\rightarrow$ `GET /api/v1/orders` $\rightarrow$ Fetches orders for current user $\rightarrow$ `200 OK` $\rightarrow$ Render order list.
-- Review $\rightarrow$ `POST /api/v1/products/:id/reviews` $\rightarrow$ Upserts review, recalculates product rating $\rightarrow$ `201 Created` $\rightarrow$ Update review section.
+- History ৳\rightarrow৳ `GET /api/v1/orders` ৳\rightarrow৳ Fetches orders for current user ৳\rightarrow৳ `200 OK` ৳\rightarrow৳ Render order list.
+- Review ৳\rightarrow৳ `POST /api/v1/products/:id/reviews` ৳\rightarrow৳ Upserts review, recalculates product rating ৳\rightarrow৳ `201 Created` ৳\rightarrow৳ Update review section.
 
 ## Frontend Notes
 

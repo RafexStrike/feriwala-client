@@ -121,7 +121,7 @@ export default function ProductsPage() {
             render: (item) => (
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href={`/admin/products/${item._id}/edit`}>
+                  <Link href={`/admin/products/৳{item._id}/edit`}>
                     <Pencil className="h-4 w-4" />
                   </Link>
                 </Button>

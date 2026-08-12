@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${satoshi.variable} ${instrumentSerif.variable}`}>
+    <html lang="en" className={`৳{satoshi.variable} ৳{instrumentSerif.variable}`}>
       <body className="bg-canvas font-sans text-ink antialiased">
         <RootProviders>
           <div id="top" className="min-h-screen bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.38),transparent_42%)]">

@@ -32,7 +32,7 @@ export function StarRating({
     <div
       className={cn('flex items-center gap-0.5', className)}
       role={interactive ? 'radiogroup' : 'img'}
-      aria-label={`${rating} out of ${maxRating} stars`}
+      aria-label={`৳{rating} out of ৳{maxRating} stars`}
       aria-readonly={!interactive}
     >
       {stars.map((star) => {
@@ -53,7 +53,7 @@ export function StarRating({
               interactive && 'cursor-pointer hover:text-honey',
               sizeClasses[size]
             )}
-            aria-label={`${star} star${star !== 1 ? 's' : ''}`}
+            aria-label={`৳{star} star৳{star !== 1 ? 's' : ''}`}
             aria-checked={star <= rating}
             role={interactive ? 'radio' : undefined}
           >
@@ -62,7 +62,7 @@ export function StarRating({
               <Star
                 className="absolute left-0 top-0 text-honey"
                 fill="currentColor"
-                style={{ clipPath: `inset(0 ${100 - fill * 100}% 0 0)` }}
+                style={{ clipPath: `inset(0 ৳{100 - fill * 100}% 0 0)` }}
               />
             )}
           </button>

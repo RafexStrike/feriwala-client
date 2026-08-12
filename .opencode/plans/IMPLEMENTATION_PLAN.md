@@ -640,7 +640,7 @@ deleteNotificationEmail(id: string): Promise<ApiResponse<{ message: string }>>
 
 ```env
 # .env.local
-NEXT_PUBLIC_API_URL=http://localhost:5000/api/v1
+NEXT_PUBLIC_API_URL=https://feriwala-server.onrender.com/api/v1
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 

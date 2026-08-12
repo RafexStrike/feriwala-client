@@ -46,14 +46,14 @@ function generateDump() {
     const content = fs.readFileSync(file, "utf-8");
 
     output += `\n\n---\n`;
-    output += `## FILE: ${file}\n\n`;
+    output += `## FILE: ৳{file}\n\n`;
     output += "```" + path.extname(file).slice(1) + "\n";
     output += content + "\n";
     output += "```\n";
   });
 
   fs.writeFileSync(OUTPUT_FILE, output);
-  console.log(`✅ Dump created: ${OUTPUT_FILE}`);
+  console.log(`✅ Dump created: ৳{OUTPUT_FILE}`);
 }
 
 generateDump();

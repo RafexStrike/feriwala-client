@@ -16,7 +16,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+      router.push(`/login?redirect=৳{encodeURIComponent(pathname)}`);
     }
   }, [isAuthenticated, isLoading, router, pathname]);
 
@@ -39,9 +39,9 @@ export function VerifiedRoute({ children }: ProtectedRouteProps) {
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
-        router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
+        router.push(`/login?redirect=৳{encodeURIComponent(pathname)}`);
       } else if (!isVerified) {
-        router.push(`/verify-email?redirect=${encodeURIComponent(pathname)}`);
+        router.push(`/verify-email?redirect=৳{encodeURIComponent(pathname)}`);
       }
     }
   }, [isAuthenticated, isVerified, isLoading, router, pathname]);

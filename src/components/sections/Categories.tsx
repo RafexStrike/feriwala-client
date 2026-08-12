@@ -19,7 +19,7 @@ export function Categories() {
             {homepageContent.categories.items.map((category) => (
               <Link
                 key={category.slug}
-                href={`/products/${category.slug}`}
+                href={`/products/৳{category.slug}`}
                 className="group rounded-[1.45rem] border border-line bg-canvas p-4 transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15"
               >
                 <div className="flex items-center justify-between gap-3">

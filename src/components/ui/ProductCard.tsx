@@ -10,7 +10,7 @@ type ProductCardProps = {
 export function ProductCard({ product, className }: ProductCardProps) {
   return (
     <Link
-      href={`/products/${product.categorySlug}`}
+      href={`/products/৳{product.categorySlug}`}
       className={cn(
         "group flex h-full flex-col rounded-[1.75rem] border border-line bg-surface p-5 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15",
         className,
@@ -26,7 +26,7 @@ export function ProductCard({ product, className }: ProductCardProps) {
         <div
           className="mb-6 aspect-[4/3] rounded-[1.35rem] border border-line/70 bg-gradient-to-br"
           style={{
-            backgroundImage: `radial-gradient(circle at 30% 28%, ${product.accent}33, transparent 38%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.7), transparent 26%), linear-gradient(145deg, rgba(255,255,255,0.88), ${product.accent}18)`,
+            backgroundImage: `radial-gradient(circle at 30% 28%, ৳{product.accent}33, transparent 38%), radial-gradient(circle at 70% 20%, rgba(255,255,255,0.7), transparent 26%), linear-gradient(145deg, rgba(255,255,255,0.88), ৳{product.accent}18)`,
           }}
         />
         <h3 className="font-display text-2xl leading-none tracking-[-0.02em] text-ink">{product.name}</h3>

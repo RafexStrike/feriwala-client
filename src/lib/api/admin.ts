@@ -38,7 +38,7 @@ export async function getAdminProducts() {
 }
 
 export async function getAdminProduct(productId: string) {
-  return apiClient.get<ProductDetail>(`/products/${productId}`);
+  return apiClient.get<ProductDetail>(`/products/৳{productId}`);
 }
 
 export async function createProduct(data: ProductCreateInput) {
@@ -46,15 +46,15 @@ export async function createProduct(data: ProductCreateInput) {
 }
 
 export async function updateProduct(productId: string, data: ProductUpdateInput) {
-  return apiClient.patch<ProductDetail>(`/products/${productId}`, data);
+  return apiClient.patch<ProductDetail>(`/products/৳{productId}`, data);
 }
 
 export async function updateProductInventory(productId: string, stock: number) {
-  return apiClient.patch<ProductDetail>(`/products/${productId}/inventory`, { stock });
+  return apiClient.patch<ProductDetail>(`/products/৳{productId}/inventory`, { stock });
 }
 
 export async function deleteProduct(productId: string) {
-  return apiClient.delete<{ message: string }>(`/products/${productId}`);
+  return apiClient.delete<{ message: string }>(`/products/৳{productId}`);
 }
 
 // Categories
@@ -67,11 +67,11 @@ export async function createCategory(data: CategoryInput) {
 }
 
 export async function updateCategory(categoryId: string, data: Partial<CategoryInput>) {
-  return apiClient.patch<Category>(`/categories/${categoryId}`, data);
+  return apiClient.patch<Category>(`/categories/৳{categoryId}`, data);
 }
 
 export async function deleteCategory(categoryId: string) {
-  return apiClient.delete<{ message: string }>(`/categories/${categoryId}`);
+  return apiClient.delete<{ message: string }>(`/categories/৳{categoryId}`);
 }
 
 // Tags
@@ -84,11 +84,11 @@ export async function createTag(data: TagInput) {
 }
 
 export async function updateTag(tagId: string, data: Partial<TagInput>) {
-  return apiClient.patch<Tag>(`/tags/${tagId}`, data);
+  return apiClient.patch<Tag>(`/tags/৳{tagId}`, data);
 }
 
 export async function deleteTag(tagId: string) {
-  return apiClient.delete<{ message: string }>(`/tags/${tagId}`);
+  return apiClient.delete<{ message: string }>(`/tags/৳{tagId}`);
 }
 
 // Users
@@ -97,15 +97,15 @@ export async function getUsers() {
 }
 
 export async function getUser(userId: string) {
-  return apiClient.get<User>(`/users/${userId}`);
+  return apiClient.get<User>(`/users/৳{userId}`);
 }
 
 export async function updateUser(userId: string, data: UserUpdateInput) {
-  return apiClient.patch<User>(`/users/${userId}`, data);
+  return apiClient.patch<User>(`/users/৳{userId}`, data);
 }
 
 export async function deleteUser(userId: string) {
-  return apiClient.delete<{ message: string }>(`/users/${userId}`);
+  return apiClient.delete<{ message: string }>(`/users/৳{userId}`);
 }
 
 // Orders
@@ -114,11 +114,11 @@ export async function getAdminOrders() {
 }
 
 export async function getAdminOrder(orderId: string) {
-  return apiClient.get<Order>(`/orders/${orderId}`);
+  return apiClient.get<Order>(`/orders/৳{orderId}`);
 }
 
 export async function updateOrderStatus(orderId: string, data: StatusUpdateInput) {
-  return apiClient.patch<Order>(`/orders/${orderId}/status`, data);
+  return apiClient.patch<Order>(`/orders/৳{orderId}/status`, data);
 }
 
 // Notification Emails
@@ -131,9 +131,9 @@ export async function createNotificationEmail(data: NotificationEmailInput) {
 }
 
 export async function updateNotificationEmail(recipientId: string, data: Partial<NotificationEmailInput>) {
-  return apiClient.patch<NotificationRecipient>(`/admin/notification-emails/${recipientId}`, data);
+  return apiClient.patch<NotificationRecipient>(`/admin/notification-emails/৳{recipientId}`, data);
 }
 
 export async function deleteNotificationEmail(recipientId: string) {
-  return apiClient.delete<{ message: string }>(`/admin/notification-emails/${recipientId}`);
+  return apiClient.delete<{ message: string }>(`/admin/notification-emails/৳{recipientId}`);
 }

@@ -21,7 +21,7 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
 
   return (
     <Link
-      href={`/products/${product._id}`}
+      href={`/products/৳{product._id}`}
       className={cn(
         "group flex h-full flex-col rounded-[1.75rem] border border-line bg-surface p-5 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15 overflow-hidden",
         className
@@ -38,7 +38,7 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
           className="mb-6 aspect-[4/3] relative overflow-hidden rounded-[1.35rem] border border-line/70 bg-gradient-to-br"
           style={{
             backgroundImage: image
-              ? `url(${image})`
+              ? `url(৳{image})`
               : `linear-gradient(145deg, rgba(255,255,255,0.88), #6b98b518)`,
             backgroundSize: "cover",
             backgroundPosition: "center",

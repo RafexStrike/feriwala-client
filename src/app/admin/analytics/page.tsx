@@ -39,8 +39,8 @@ function SimpleBarChart({
             <div key={i} className="flex flex-1 flex-col items-center gap-1">
               <span className="text-xs text-muted">{formatNumber(value)}</span>
               <div
-                className={`w-full rounded-t-md ${color}`}
-                style={{ height: `${Math.max(height, 4)}%` }}
+                className={`w-full rounded-t-md ৳{color}`}
+                style={{ height: `৳{Math.max(height, 4)}%` }}
               />
               <span className="text-xs text-muted truncate w-full text-center">
                 {String(item.month || item.date || item.year || "").slice(0, 3)}

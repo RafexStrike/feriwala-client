@@ -44,7 +44,7 @@ function useCompactScreen() {
 function DebugInfo() {
   useFrame(({ camera }) => {
     if (DEBUG_3D) {
-      console.log(`Camera Position: ${camera.position.x.toFixed(2)}, ${camera.position.y.toFixed(2)}, ${camera.position.z.toFixed(2)}`);
+      console.log(`Camera Position: ৳{camera.position.x.toFixed(2)}, ৳{camera.position.y.toFixed(2)}, ৳{camera.position.z.toFixed(2)}`);
     }
   });
   return null;
