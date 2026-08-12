@@ -93,8 +93,8 @@ export default function OrderDetailPage() {
   return (
     <div>
       <AdminHeader
-        title={`Order #৳{order._id.slice(0, 8)}`}
-        description={`Placed on ৳{formatDate(order.createdAt)}`}
+        title={`Order #${order._id.slice(0, 8)}`}
+        description={`Placed on ${formatDate(order.createdAt)}`}
       />
 
       <div className="grid gap-6 lg:grid-cols-3">

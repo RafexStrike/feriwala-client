@@ -173,7 +173,7 @@ export function CartSidebar() {
                   </span>
                   {subtotal > 0 && subtotal < 100 && (
                     <p className="text-xs text-sky/70 mt-0.5 font-medium">
-                      Free over ৳100
+                      Free over $100
                     </p>
                   )}
                 </div>

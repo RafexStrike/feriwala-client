@@ -96,7 +96,7 @@ export default function CartPage() {
     <div className="mx-auto w-[min(1180px,calc(100vw-2rem))] py-16">
       <PageHeader
         title="Your Cart"
-        description={`Review your ৳{itemCount} ৳{itemCount === 1 ? "item" : "items"} before checkout.`}
+        description={`Review your ${itemCount} ${itemCount === 1 ? "item" : "items"} before checkout.`}
         actions={
           <Button variant="ghost" size="sm" asChild>
             <a href="/products">
@@ -153,7 +153,7 @@ export default function CartPage() {
                   <span className="font-medium text-ink">
                     {shipping === 0 ? "Free" : formatCurrency(shipping)}
                     {subtotal > 0 && subtotal < 100 && (
-                      <span className="ml-2 text-xs text-muted">(Free over ৳100)</span>
+                      <span className="ml-2 text-xs text-muted">(Free over $100)</span>
                     )}
                   </span>
                 </div>

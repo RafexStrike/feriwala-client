@@ -12,7 +12,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
   const data: ApiResponse<T> = await response.json().catch(() => ({ success: false, message: 'Invalid response' }));
 
   if (!response.ok || !data.success) {
-    const message = data.message || `Request failed with status ৳{response.status}`;
+    const message = data.message || `Request failed with status ${response.status}`;
     throw new ApiError(response.status, message, data.details);
   }
 
@@ -21,7 +21,7 @@ async function handleResponse<T>(response: Response): Promise<T> {
 
 export const apiClient = {
   async get<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'GET',
       headers: getAuthHeaders(),
       credentials: 'include',
@@ -31,7 +31,7 @@ export const apiClient = {
   },
 
   async post<T>(endpoint: string, body: unknown, options?: RequestInit): Promise<T> {
-    const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'POST',
       headers: getAuthHeaders(),
       credentials: 'include',
@@ -42,7 +42,7 @@ export const apiClient = {
   },
 
   async patch<T>(endpoint: string, body: unknown, options?: RequestInit): Promise<T> {
-    const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'PATCH',
       headers: getAuthHeaders(),
       credentials: 'include',
@@ -53,7 +53,7 @@ export const apiClient = {
   },
 
   async put<T>(endpoint: string, body: unknown, options?: RequestInit): Promise<T> {
-    const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'PUT',
       headers: getAuthHeaders(),
       credentials: 'include',
@@ -64,7 +64,7 @@ export const apiClient = {
   },
 
   async delete<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
       method: 'DELETE',
       headers: getAuthHeaders(),
       credentials: 'include',
@@ -78,7 +78,7 @@ export async function fetchWithAuth<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const response = await fetch(`৳{API_BASE_URL}৳{endpoint}`, {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       ...getAuthHeaders(),

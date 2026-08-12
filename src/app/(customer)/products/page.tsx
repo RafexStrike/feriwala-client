@@ -65,7 +65,7 @@ function ProductsContent() {
         params.set("page", "1");
       }
 
-      router.push(`৳{pathname}?৳{params.toString()}`);
+      router.push(`${pathname}?${params.toString()}`);
     },
     [searchParams, router, pathname]
   );
@@ -171,7 +171,7 @@ function ProductsContent() {
               <div className="py-16 text-center">
                 <p className="text-muted mb-4">
                   {search
-                    ? `No products found matching "৳{search}"`
+                    ? `No products found matching "${search}"`
                     : "No products available in this category"}
                 </p>
                 {hasActiveFilters && (

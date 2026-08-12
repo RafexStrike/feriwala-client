@@ -27,7 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const fetchUser = async () => {
     try {
-      const response = await fetch(`৳{API_BASE}/users/me`, {
+      const response = await fetch(`${API_BASE}/users/me`, {
         credentials: 'include',
       });
       
@@ -53,7 +53,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const login = async (email: string, password: string) => {
-    const response = await fetch(`৳{AUTH_BASE}/api/auth/sign-in/email`, {
+    const response = await fetch(`${AUTH_BASE}/api/auth/sign-in/email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (name: string, email: string, password: string) => {
-    const response = await fetch(`৳{AUTH_BASE}/api/auth/sign-up/email`, {
+    const response = await fetch(`${AUTH_BASE}/api/auth/sign-up/email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
@@ -83,7 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
-    await fetch(`৳{AUTH_BASE}/api/auth/sign-out`, {
+    await fetch(`${AUTH_BASE}/api/auth/sign-out`, {
       method: 'POST',
       credentials: 'include',
     });

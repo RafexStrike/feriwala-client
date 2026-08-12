@@ -35,7 +35,7 @@ function VerifyEmailPageContent() {
 
     try {
       const response = await fetch(
-        `৳{process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/verify-email?token=৳{verificationToken}`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/verify-email?token=${verificationToken}`,
         {
           method: "GET",
           credentials: "include",
@@ -62,7 +62,7 @@ function VerifyEmailPageContent() {
   const resendVerification = async () => {
     try {
       await fetch(
-        `৳{process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/resend-verification`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/resend-verification`,
         {
           method: "POST",
           credentials: "include",

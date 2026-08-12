@@ -78,11 +78,11 @@ function OrderHistoryCard({ order }: { order: any }) {
       </div>
       <div className="mt-4 flex items-center justify-between">
         <Button variant="ghost" size="sm" asChild>
-          <a href={`/orders/৳{order._id}`}>View Details <ChevronRight className="ml-1 h-3.5 w-3.5" /></a>
+          <a href={`/orders/${order._id}`}>View Details <ChevronRight className="ml-1 h-3.5 w-3.5" /></a>
         </Button>
         {order.status === "completed" && (
           <Button variant="outline" size="sm" asChild>
-            <a href={`/products/৳{order.items[0]?.product}?review=true`}>
+            <a href={`/products/${order.items[0]?.product}?review=true`}>
               <MessageSquare className="mr-1.5 h-3.5 w-3.5" />
               Write Review
             </a>

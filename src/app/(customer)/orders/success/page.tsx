@@ -102,7 +102,7 @@ function OrderSuccessContent({ searchParams }: OrderSuccessPageProps) {
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <Link href={`/orders/৳{orderId}`}>
+                <Link href={`/orders/${orderId}`}>
                   View Order Details
                 </Link>
               </Button>

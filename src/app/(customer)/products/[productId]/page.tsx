@@ -23,7 +23,7 @@ export default async function ProductDetailPage({ params }: Props) {
 async function getProductServer(productId: string) {
   try {
     const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com/api/v1";
-    const response = await fetch(`৳{API_BASE}/products/৳{productId}`, {
+    const response = await fetch(`${API_BASE}/products/${productId}`, {
       next: { revalidate: 60 },
       headers: { "Content-Type": "application/json" },
     });

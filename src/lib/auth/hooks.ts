@@ -11,7 +11,7 @@ export function useRequireAuth() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.push(`/login?redirect=৳{encodeURIComponent(pathname)}`);
+      router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
     }
   }, [isAuthenticated, isLoading, router, pathname]);
 
@@ -26,9 +26,9 @@ export function useRequireVerified() {
   useEffect(() => {
     if (!isLoading) {
       if (!isAuthenticated) {
-        router.push(`/login?redirect=৳{encodeURIComponent(pathname)}`);
+        router.push(`/login?redirect=${encodeURIComponent(pathname)}`);
       } else if (!isVerified) {
-        router.push(`/verify-email?redirect=৳{encodeURIComponent(pathname)}`);
+        router.push(`/verify-email?redirect=${encodeURIComponent(pathname)}`);
       }
     }
   }, [isAuthenticated, isVerified, isLoading, router, pathname]);

@@ -122,7 +122,7 @@ const api = axios.create({
 export const adminApi = {
   getDashboard: () => api.get('/admin/dashboard'),
   updateOrderStatus: (id: string, data: { status: string, note: string }) => 
-    api.patch(`/orders/৳{id}/status`, data),
+    api.patch(`/orders/${id}/status`, data),
   // ... other methods
 };
 ```
@@ -141,7 +141,7 @@ export const adminApiSlice = createApi({
     }),
     updateOrder: builder.mutation<OrderResponse, { id: string, data: any }>({
       query: ({ id, data }) => ({
-        url: `/orders/৳{id}/status`,
+        url: `/orders/${id}/status`,
         method: 'PATCH',
         body: data,
       }),

@@ -144,7 +144,7 @@ export default function OrdersPage() {
             render: (item) => (
               <div className="flex items-center gap-2">
                 <Button variant="ghost" size="sm" asChild>
-                  <Link href={`/admin/orders/৳{item._id}`}>
+                  <Link href={`/admin/orders/${item._id}`}>
                     <Eye className="h-4 w-4" />
                   </Link>
                 </Button>

@@ -42,7 +42,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const response = await fetch(
-        `৳{process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/forgot-password`,
+        `${process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/forgot-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

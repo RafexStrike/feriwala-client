@@ -111,7 +111,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
       <nav className="flex items-center gap-2 text-sm text-muted" aria-label="Breadcrumb">
         <a href="/products" className="hover:text-ink">Products</a>
         <ChevronRight className="h-4 w-4" />
-        <a href={`/products/৳{productData.categories[0]?.slug}`} className="hover:text-ink">
+        <a href={`/products/${productData.categories[0]?.slug}`} className="hover:text-ink">
           {productData.categories[0]?.name}
         </a>
         <ChevronRight className="h-4 w-4" />
@@ -146,10 +146,10 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                     "relative h-20 w-20 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors",
                     index === selectedImage ? "border-sky" : "border-transparent hover:border-line"
                   )}
-                  aria-label={`View image ৳{index + 1}`}
+                  aria-label={`View image ${index + 1}`}
                   aria-current={index === selectedImage}
                 >
-                  <Image src={image} alt={`৳{productData.name} - view ৳{index + 1}`} fill className="object-cover" sizes="80px" />
+                  <Image src={image} alt={`${productData.name} - view ${index + 1}`} fill className="object-cover" sizes="80px" />
                 </button>
               ))}
             </div>
@@ -221,7 +221,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
               </Button>
             </div>
             <p className="mt-2 text-sm text-muted">
-              {productData.stock} in stock • Free shipping over ৳100 • 30-day returns
+              {productData.stock} in stock • Free shipping over $100 • 30-day returns
             </p>
           </div>
 
@@ -232,7 +232,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
               </div>
               <div>
                 <p className="font-medium text-ink">Free Shipping</p>
-                <p>On orders over ৳100</p>
+                <p>On orders over $100</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -305,7 +305,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                       <div className="flex-1 h-2 rounded-full bg-canvas overflow-hidden">
                         <div
                           className="h-full bg-sky transition-all duration-500"
-                          style={{ width: `৳{percentage}%` }}
+                          style={{ width: `${percentage}%` }}
                         />
                       </div>
                       <span className="w-12 text-sm text-muted">{count}</span>
