@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { CheckCircle, Package, ArrowLeft, Truck } from "lucide-react";
@@ -34,10 +34,15 @@ function OrderSuccessContent({ searchParams }: OrderSuccessPageProps) {
     }
   };
 
+  const hasClearedCart = useRef(false);
+
   useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["cart"] });
-    queryClient.invalidateQueries({ queryKey: ["orders"] });
-    clearCartHook();
+    if (!hasClearedCart.current) {
+      hasClearedCart.current = true;
+      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["orders"] });
+      clearCartHook();
+    }
   }, [queryClient, clearCartHook]);
 
   return (
