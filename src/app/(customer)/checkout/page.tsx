@@ -40,6 +40,8 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
       shippingAddress: "",
       customerEmail: "",
       notes: "",
+      whatsappNumber: "",
+      facebookProfileLink: "",
     },
   });
 
@@ -51,6 +53,8 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
         shippingAddress: data.shippingAddress,
         customerEmail: data.customerEmail || undefined,
         notes: data.notes || undefined,
+        whatsappNumber: data.whatsappNumber,
+        facebookProfileLink: data.facebookProfileLink || undefined,
       });
       router.push(`/orders/success?orderId=${order._id}&redirect=/products`);
     } catch (error) {
@@ -145,6 +149,38 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
                   />
                   {errors.customerEmail && (
                     <p className="mt-1 text-sm text-clay">{errors.customerEmail.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="whatsappNumber" className="block text-sm font-medium text-ink">
+                    WhatsApp Number <span className="text-clay">*</span>
+                  </Label>
+                  <Input
+                    id="whatsappNumber"
+                    type="tel"
+                    {...register("whatsappNumber")}
+                    placeholder="01712345678"
+                    className="mt-1"
+                  />
+                  {errors.whatsappNumber && (
+                    <p className="mt-1 text-sm text-clay">{errors.whatsappNumber.message}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="facebookProfileLink" className="block text-sm font-medium text-ink">
+                    Facebook Profile Link (Optional)
+                  </Label>
+                  <Input
+                    id="facebookProfileLink"
+                    type="url"
+                    {...register("facebookProfileLink")}
+                    placeholder="https://facebook.com/username"
+                    className="mt-1"
+                  />
+                  {errors.facebookProfileLink && (
+                    <p className="mt-1 text-sm text-clay">{errors.facebookProfileLink.message}</p>
                   )}
                 </div>
               </div>

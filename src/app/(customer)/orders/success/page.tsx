@@ -10,6 +10,7 @@ import { VerifiedRoute } from "@/components/customer/RouteGuards";
 import { useCart } from "@/lib/hooks/useCart";
 import { clearCart } from "@/lib/api/customer";
 import { useQueryClient } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 interface OrderSuccessPageProps {
   searchParams: Promise<{ orderId?: string }>;
@@ -26,28 +27,12 @@ function OrderSuccessContent({ searchParams }: OrderSuccessPageProps) {
   const orderId = searchParamsClient.get("orderId");
   const redirectTo = searchParamsClient.get("redirect") || "/products";
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRedirectCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          router.push(redirectTo);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [router, redirectTo]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowRedirectButton(true);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handleCopyOrderId = () => {
+    if (orderId) {
+      navigator.clipboard.writeText(orderId);
+      toast("Order ID copied to clipboard!");
+    }
+  };
 
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ["cart"] });
@@ -64,37 +49,21 @@ function OrderSuccessContent({ searchParams }: OrderSuccessPageProps) {
           </div>
           <h1 className="mb-2 text-3xl font-display font-bold text-ink">Order Placed Successfully!</h1>
           <p className="mb-6 text-lg text-muted">
-            Thank you for your order. Your order has been confirmed and is being processed.
+            Thank you for your order. Our moderators will contact you via WhatsApp to confirm the order.
           </p>
 
           {orderId && (
-            <div className="mb-6 p-4 rounded-xl bg-green-50 border border-green-200">
-              <p className="text-sm text-green-800">
-                <strong>Order ID:</strong> #{orderId.slice(-8).toUpperCase()}
+            <div className="mb-6 p-4 rounded-xl bg-green-50 border border-green-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <p className="text-sm text-green-800 break-all">
+                <strong>Order ID:</strong> {orderId}
               </p>
+              <Button onClick={handleCopyOrderId} variant="outline" size="sm" className="whitespace-nowrap">
+                Copy Order ID
+              </Button>
             </div>
           )}
 
           <div className="space-y-4">
-            <div className="flex items-center justify-center gap-6 text-sm text-muted">
-              <div className="flex items-center gap-2">
-                <Package className="h-4 w-4" />
-                <span>Order confirmed</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Truck className="h-4 w-4" />
-                <span>Processing</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Truck className="h-4 w-4" />
-                <span>Shipped</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <CheckCircle className="h-4 w-4" />
-                <span>Delivered</span>
-              </div>
-            </div>
-
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" asChild>
                 <Link href={redirectTo}>
@@ -107,20 +76,6 @@ function OrderSuccessContent({ searchParams }: OrderSuccessPageProps) {
                 </Link>
               </Button>
             </div>
-
-            {showRedirectButton && (
-              <p className="text-sm text-muted">
-                Redirecting to {redirectTo === "/products" ? "products" : "home"} in {redirectCountdown}s...
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="ml-2"
-                  onClick={() => router.push(redirectTo)}
-                >
-                  Go now
-                </Button>
-              </p>
-            )}
           </div>
 
           <div className="mt-8">

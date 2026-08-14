@@ -82,6 +82,8 @@ export interface Order {
   profit: number;
   shippingAddress: string;
   customerEmail: string;
+  whatsappNumber: string;
+  facebookProfileLink?: string;
   statusHistory: OrderStatusHistory[];
   notes: string;
   createdAt: string;
@@ -104,6 +106,8 @@ export interface CheckoutData {
   shippingAddress: string;
   customerEmail?: string;
   notes?: string;
+  whatsappNumber: string;
+  facebookProfileLink?: string;
 }
 
 export interface ReviewInput {

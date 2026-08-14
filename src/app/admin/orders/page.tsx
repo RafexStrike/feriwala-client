@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, ShoppingCart, Clock, CheckCircle, XCircle } from "lucide-react";
+import { Eye, ShoppingCart, Clock, CheckCircle, XCircle, Copy, ExternalLink } from "lucide-react";
 import { useAdminOrders, useUpdateOrderStatus } from "@/lib/hooks/useAdmin";
 import { AdminHeader } from "@/components/admin/AdminHeader";
 import { DataTable } from "@/components/admin/DataTable";
@@ -103,6 +103,63 @@ export default function OrdersPage() {
             header: "Customer",
             render: (item) => (
               <span className="text-ink">{item.customerEmail || "N/A"}</span>
+            ),
+          },
+          {
+            key: "whatsappNumber",
+            header: "WhatsApp",
+            render: (item) => (
+              <div className="flex items-center gap-2">
+                <span className="text-ink">{item.whatsappNumber || "N/A"}</span>
+                {item.whatsappNumber && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-6 w-6 p-0"
+                    onClick={() => {
+                      navigator.clipboard.writeText(item.whatsappNumber);
+                      toast({ title: "WhatsApp number copied!" });
+                    }}
+                  >
+                    <Copy className="h-3 w-3" />
+                  </Button>
+                )}
+              </div>
+            ),
+          },
+          {
+            key: "facebookProfileLink",
+            header: "Facebook",
+            render: (item) => (
+              <div className="flex items-center gap-2">
+                {item.facebookProfileLink ? (
+                  <>
+                    <a
+                      href={item.facebookProfileLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sky hover:underline flex items-center gap-1 max-w-[150px] truncate"
+                    >
+                      Profile <ExternalLink className="h-3 w-3" />
+                    </a>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-6 w-6 p-0"
+                      onClick={() => {
+                        if (item.facebookProfileLink) {
+                          navigator.clipboard.writeText(item.facebookProfileLink);
+                          toast({ title: "Facebook link copied!" });
+                        }
+                      }}
+                    >
+                      <Copy className="h-3 w-3" />
+                    </Button>
+                  </>
+                ) : (
+                  <span className="text-muted">N/A</span>
+                )}
+              </div>
             ),
           },
           {

@@ -24,6 +24,19 @@ export const checkoutSchema = z.object({
   shippingAddress: z.string().min(10, 'Address must be at least 10 characters').max(500, 'Address cannot exceed 500 characters'),
   customerEmail: z.string().email('Invalid email address').optional().or(z.literal('')),
   notes: z.string().max(1000, 'Notes cannot exceed 1000 characters').optional(),
+  whatsappNumber: z.string()
+    .transform(val => val.replace(/[\s-]/g, ''))
+    .refine(val => /^(?:\+8801|01)[3-9]\d{8}$/.test(val), "Invalid Bangladeshi mobile number")
+    .transform(val => val.startsWith('01') ? '+88' + val : val),
+  facebookProfileLink: z.string().trim().optional().or(z.literal('')).refine(val => {
+    if (!val) return true;
+    try {
+      const url = new URL(val);
+      return url.hostname.includes('facebook.com') || url.hostname.includes('fb.com');
+    } catch {
+      return false;
+    }
+  }, { message: "Must be a valid Facebook profile URL" })
 });
 
 export const productCreateSchema = z.object({
