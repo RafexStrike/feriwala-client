@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://feriwala-server.onrender.com/api/v1';
 // auth routes live under /api/auth (no v1 prefix)
-const AUTH_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://feriwala-server.onrender.com';
+const AUTH_BASE = process.env.NEXT_PUBLIC_SERVER_URL || 'https://feriwala-server.onrender.com';
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const response = await fetch(`${API_BASE}/users/me`, {
         credentials: 'include',
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         if (data.success && data.data) {
