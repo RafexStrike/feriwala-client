@@ -49,12 +49,13 @@ export function SiteHeader() {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-medium text-ink">{user?.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                {/* my account page exist, but is hidden from the user, cause we will implement it later */}
+                {/* <DropdownMenuItem asChild>
                   <Link href="/account" className="flex items-center gap-2">
                     <User className="h-4 w-4" />
                     Account
                   </Link>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem asChild>
                   <Link href="/orders" className="flex items-center gap-2">
                     <ShoppingBag className="h-4 w-4" />
