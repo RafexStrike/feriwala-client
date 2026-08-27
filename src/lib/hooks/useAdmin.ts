@@ -23,6 +23,7 @@ import {
   deleteUser,
   getAdminOrders,
   getAdminOrder,
+  createManualOrder,
   updateOrderStatus,
   getNotificationEmails,
   createNotificationEmail,
@@ -37,6 +38,7 @@ import type {
   UserUpdateInput,
   StatusUpdateInput,
   NotificationEmailInput,
+  ManualOrderInput,
 } from "@/types/api";
 
 // Dashboard & Analytics
@@ -249,6 +251,19 @@ export function useAdminOrder(orderId: string) {
     queryKey: ["admin", "order", orderId],
     queryFn: () => getAdminOrder(orderId),
     enabled: !!orderId,
+  });
+}
+
+export function useCreateManualOrder() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: ManualOrderInput) => createManualOrder(data),
+    onSuccess: (order) => {
+      queryClient.invalidateQueries({ queryKey: ["admin", "orders"] });
+      if (order?._id) {
+        queryClient.invalidateQueries({ queryKey: ["admin", "order", order._id] });
+      }
+    },
   });
 }
 

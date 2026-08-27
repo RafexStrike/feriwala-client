@@ -17,6 +17,7 @@ import type {
   UserUpdateInput,
   StatusUpdateInput,
   NotificationEmailInput,
+  ManualOrderInput,
 } from '@/types/api';
 
 // Dashboard & Analytics
@@ -115,6 +116,10 @@ export async function getAdminOrders() {
 
 export async function getAdminOrder(orderId: string) {
   return apiClient.get<Order>(`/orders/${orderId}`);
+}
+
+export async function createManualOrder(data: ManualOrderInput) {
+  return apiClient.post<Order>(`/admin/orders`, data);
 }
 
 export async function updateOrderStatus(orderId: string, data: StatusUpdateInput) {

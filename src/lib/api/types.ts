@@ -98,7 +98,8 @@ export interface OrderStatusHistory {
 
 export interface Order {
   _id: string;
-  user: string;
+  user: string | null;
+  source: OrderSource;
   items: OrderItem[];
   status: 'pending' | 'completed' | 'canceled';
   subtotal: number;
@@ -106,6 +107,11 @@ export interface Order {
   profit: number;
   shippingAddress: string;
   customerEmail: string;
+  whatsappNumber: string;
+  facebookProfileLink?: string;
+  externalCustomerName?: string;
+  externalCustomerPhone?: string;
+  externalCustomerFacebookProfileLink?: string;
   statusHistory: OrderStatusHistory[];
   notes: string;
   createdAt: string;
@@ -233,4 +239,25 @@ export interface NotificationEmailInput {
   email: string;
   isActive?: boolean;
   notificationTypes?: string[];
+}
+
+export type OrderSource = 'website' | 'facebook' | 'phone' | 'physical_store' | 'in_person' | 'whatsapp' | 'telegram' | 'other';
+
+export interface ManualOrderItemInput {
+  productId: string;
+  quantity: number;
+}
+
+export interface ManualOrderInput {
+  source?: OrderSource;
+  status?: 'pending' | 'completed' | 'canceled';
+  shippingAddress?: string;
+  customerEmail?: string;
+  whatsappNumber?: string;
+  facebookProfileLink?: string;
+  externalCustomerName?: string;
+  externalCustomerPhone?: string;
+  externalCustomerFacebookProfileLink?: string;
+  notes?: string;
+  items: ManualOrderItemInput[];
 }

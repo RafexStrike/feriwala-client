@@ -1,3 +1,5 @@
+export type OrderSource = 'website' | 'facebook' | 'phone' | 'physical_store' | 'in_person' | 'whatsapp' | 'telegram' | 'other';
+
 export interface Category {
   _id: string;
   name: string;
@@ -74,7 +76,8 @@ export interface OrderStatusHistory {
 
 export interface Order {
   _id: string;
-  user: string;
+  user: string | null;
+  source: OrderSource;
   items: OrderItem[];
   status: 'pending' | 'completed' | 'canceled';
   subtotal: number;
@@ -84,6 +87,9 @@ export interface Order {
   customerEmail: string;
   whatsappNumber: string;
   facebookProfileLink?: string;
+  externalCustomerName?: string;
+  externalCustomerPhone?: string;
+  externalCustomerFacebookProfileLink?: string;
   statusHistory: OrderStatusHistory[];
   notes: string;
   createdAt: string;
@@ -108,6 +114,25 @@ export interface CheckoutData {
   notes?: string;
   whatsappNumber: string;
   facebookProfileLink?: string;
+}
+
+export interface ManualOrderItemInput {
+  productId: string;
+  quantity: number;
+}
+
+export interface ManualOrderInput {
+  source?: OrderSource;
+  status?: 'pending' | 'completed' | 'canceled';
+  shippingAddress?: string;
+  customerEmail?: string;
+  whatsappNumber?: string;
+  facebookProfileLink?: string;
+  externalCustomerName?: string;
+  externalCustomerPhone?: string;
+  externalCustomerFacebookProfileLink?: string;
+  notes?: string;
+  items: ManualOrderItemInput[];
 }
 
 export interface ReviewInput {

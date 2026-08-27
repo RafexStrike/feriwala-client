@@ -50,6 +50,7 @@ export {
   deleteUser,
   getAdminOrders,
   getAdminOrder,
+  createManualOrder,
   updateOrderStatus,
   getNotificationEmails,
   createNotificationEmail,

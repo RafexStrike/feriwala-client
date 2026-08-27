@@ -94,17 +94,104 @@ interface AnalyticsSummary {
     - **Body**: `{ status: 'pending'|'completed'|'canceled', note: string }`
     - **Effect**: Updates order status, adds to `statusHistory`, and triggers email notification.
 
----
+#### Manual Order Creation
+- **Create**: `POST /api/v1/admin/orders`
+- **Auth**: Admin required (`requireAdmin`)
+- **Body**:
+```typescript
+interface ManualOrderItemInput {
+  productId: string;
+  quantity: number; // integer > 0
+}
 
-### Notification Management
-
-#### Recipient CRUD
-- **List**: `GET /api/v1/admin/notification-emails`
-- **Create**: `POST /api/v1/admin/notification-emails`
-    - **Body**: `{ email, isActive, notificationTypes }`
-- **Update**: `PATCH /api/v1/admin/notification-emails/:recipientId`
-    - **Body**: `{ email, isActive, notificationTypes }` (Partial)
-- **Delete**: `DELETE /api/v1/admin/notification-emails/:recipientId`
+interface ManualOrderCreateInput {
+  source?: 'website' | 'facebook' | 'phone' | 'physical_store' | 'in_person' | 'whatsapp' | 'telegram' | 'other';
+  status?: 'pending' | 'completed' | 'canceled';
+  items: ManualOrderItemInput[];
+  shippingAddress?: string;
+  customerEmail?: string;
+  whatsappNumber?: string;
+  facebookProfileLink?: string;
+  externalCustomerName?: string;
+  externalCustomerPhone?: string;
+  externalCustomerFacebookProfileLink?: string;
+  notes?: string;
+}
+```
+- **Allowed `source` values**:
+  - `website`
+  - `facebook`
+  - `phone`
+  - `physical_store`
+  - `in_person`
+  - `whatsapp`
+  - `telegram`
+  - `other`
+- **Validation**:
+  - Must be authenticated as an admin.
+  - `items` is required and must contain at least one item.
+  - Each item must include a valid product ID and positive integer quantity.
+  - Product existence is checked on the server.
+  - Stock is validated against the current inventory and decremented only if the order creation succeeds.
+  - No client-supplied price, product name, or subtotal is trusted; backend recalculates totals and profit from authoritative product data.
+  - `shippingAddress`, `customerEmail`, `whatsappNumber`, and `facebookProfileLink` are optional for external/manual orders but stored when supplied.
+  - `externalCustomerName`, `externalCustomerPhone`, and `externalCustomerFacebookProfileLink` are optional fields for non-registered customers.
+  - `status` defaults to `pending` if omitted.
+- **Inventory behavior**:
+  - Validation and stock deduction happen inside a transaction with the order creation.
+  - Failed order creation does not leave inventory incorrectly deducted.
+  - The resulting document is a normal `Order` with `source`, `items`, `subtotal`, `total`, `profit`, and `statusHistory`.
+- **Success response**:
+```json
+{
+  "success": true,
+  "data": {
+    "_id": "...",
+    "user": null,
+    "source": "facebook",
+    "items": [
+      {
+        "product": "productId",
+        "name": "Example Product",
+        "quantity": 2,
+        "price": 1200,
+        "costPrice": 700
+      }
+    ],
+    "status": "completed",
+    "subtotal": 2400,
+    "total": 2400,
+    "profit": 1000,
+    "shippingAddress": "",
+    "customerEmail": "",
+    "whatsappNumber": "",
+    "facebookProfileLink": "",
+    "externalCustomerName": "John Doe",
+    "externalCustomerPhone": "+8801712345678",
+    "externalCustomerFacebookProfileLink": "https://facebook.com/john.doe",
+    "statusHistory": [
+      {
+        "status": "completed",
+        "note": "Manual order created",
+        "changedAt": "2026-08-28T12:00:00.000Z"
+      }
+    ],
+    "notes": "Customer called for pickup",
+    "createdAt": "2026-08-28T12:00:00.000Z",
+    "updatedAt": "2026-08-28T12:00:00.000Z"
+  }
+}
+```
+- **Common error responses**:
+  - `401 Unauthorized` when no valid admin session is present.
+  - `403 Forbidden` when the user does not have `role === 'admin'`.
+  - `400 Bad Request` for invalid payloads or missing items.
+  - `404 Not Found` when any selected product does not exist.
+  - `400 Bad Request` when stock is insufficient for any selected product.
+- **Notes**:
+  - Manual orders are stored in the same `Order` collection as website orders.
+  - Completed manual orders automatically count in analytics because they are normal `Order` documents with valid totals/profit/status.
+  - This route does not send customer notifications automatically; status notification emails continue to be sent from the dedicated status-update lifecycle.
 
 ---
 
