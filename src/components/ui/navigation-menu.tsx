@@ -41,7 +41,7 @@ NavigationMenuList.displayName = NavigationMenuPrimitive.List.displayName
 const NavigationMenuItem = NavigationMenuPrimitive.Item
 
 const navigationMenuTriggerStyle = cva(
-  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-oklch(1 0 0) px-4 py-2 text-sm font-medium transition-colors hover:bg-oklch(0.97 0 0) hover:text-oklch(0.205 0 0) focus:bg-oklch(0.97 0 0) focus:text-oklch(0.205 0 0) focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-oklch(0.205 0 0) data-[state=open]:bg-oklch(0.97 0 0)/50 data-[state=open]:hover:bg-oklch(0.97 0 0) data-[state=open]:focus:bg-oklch(0.97 0 0) dark:bg-oklch(0.145 0 0) dark:hover:bg-oklch(0.269 0 0) dark:hover:text-oklch(0.985 0 0) dark:focus:bg-oklch(0.269 0 0) dark:focus:text-oklch(0.985 0 0) dark:data-[state=open]:text-oklch(0.985 0 0) dark:data-[state=open]:bg-oklch(0.269 0 0)/50 dark:data-[state=open]:hover:bg-oklch(0.269 0 0) dark:data-[state=open]:focus:bg-oklch(0.269 0 0)"
+  "group inline-flex h-9 w-max items-center justify-center rounded-md bg-white px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[state=open]:text-gray-900 data-[state=open]:bg-gray-100/50 data-[state=open]:hover:bg-gray-100 data-[state=open]:focus:bg-gray-100 dark:bg-surface-dark dark:hover:bg-gray-700 dark:hover:text-gray-100 dark:focus:bg-gray-700 dark:focus:text-gray-100 dark:data-[state=open]:text-gray-100 dark:data-[state=open]:bg-gray-700/50 dark:data-[state=open]:hover:bg-gray-700 dark:data-[state=open]:focus:bg-gray-700"
 )
 
 const NavigationMenuTrigger = React.forwardRef<
@@ -86,7 +86,7 @@ const NavigationMenuViewport = React.forwardRef<
   <div className={cn("absolute left-0 top-full flex justify-center")}>
     <NavigationMenuPrimitive.Viewport
       className={cn(
-        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border border-oklch(0.922 0 0) bg-oklch(1 0 0) text-oklch(0.145 0 0) shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)] dark:border-oklch(1 0 0 / 10%) dark:bg-oklch(0.205 0 0) dark:text-oklch(0.985 0 0)",
+        "origin-top-center relative mt-1.5 h-[var(--radix-navigation-menu-viewport-height)] w-full overflow-hidden rounded-md border border-gray-200 bg-white text-gray-900 shadow data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-90 md:w-[var(--radix-navigation-menu-viewport-width)] dark:border-white/10 dark:bg-gray-800 dark:text-gray-100",
         className
       )}
       ref={ref}
@@ -109,7 +109,7 @@ const NavigationMenuIndicator = React.forwardRef<
     )}
     {...props}
   >
-    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-oklch(0.922 0 0) shadow-md dark:bg-oklch(1 0 0 / 10%)" />
+    <div className="relative top-[60%] h-2 w-2 rotate-45 rounded-tl-sm bg-gray-200 shadow-md dark:bg-white/10" />
   </NavigationMenuPrimitive.Indicator>
 ))
 NavigationMenuIndicator.displayName =

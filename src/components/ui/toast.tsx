@@ -25,13 +25,13 @@ const ToastViewport = React.forwardRef<
 ToastViewport.displayName = ToastPrimitives.Viewport.displayName
 
 const toastVariants = cva(
-  "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border border-oklch(0.922 0 0) p-4 pr-6 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full dark:border-oklch(1 0 0 / 10%)",
+  "group pointer-events-auto relative flex w-full items-center justify-between space-x-2 overflow-hidden rounded-md border border-gray-200 p-4 pr-6 shadow-lg transition-all data-[swipe=cancel]:translate-x-0 data-[swipe=end]:translate-x-[var(--radix-toast-swipe-end-x)] data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)] data-[swipe=move]:transition-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[swipe=end]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full data-[state=open]:slide-in-from-top-full data-[state=open]:sm:slide-in-from-bottom-full dark:border-white/10",
   {
     variants: {
       variant: {
-        default: "border bg-oklch(1 0 0) text-oklch(0.145 0 0) dark:bg-oklch(0.145 0 0) dark:text-oklch(0.985 0 0)",
+        default: "border bg-white text-gray-900 dark:bg-surface-dark dark:text-gray-100",
         destructive:
-          "destructive group border-oklch(0.577 0.245 27.325) bg-oklch(0.577 0.245 27.325) text-destructive-foreground dark:border-oklch(0.704 0.191 22.216) dark:bg-oklch(0.704 0.191 22.216)",
+          "destructive group border-red-200 bg-red-50 text-red-700 dark:border-red-700 dark:bg-red-900/50",
       },
     },
     defaultVariants: {
@@ -62,7 +62,7 @@ const ToastAction = React.forwardRef<
   <ToastPrimitives.Action
     ref={ref}
     className={cn(
-      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-oklch(0.922 0 0) bg-transparent px-3 text-sm font-medium transition-colors hover:bg-oklch(0.97 0 0) focus:outline-none focus:ring-1 focus:ring-oklch(0.708 0 0) disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-oklch(0.97 0 0)/40 group-[.destructive]:hover:border-oklch(0.577 0.245 27.325)/30 group-[.destructive]:hover:bg-oklch(0.577 0.245 27.325) group-[.destructive]:hover:text-destructive-foreground group-[.destructive]:focus:ring-oklch(0.577 0.245 27.325) dark:border-oklch(1 0 0 / 10%) dark:hover:bg-oklch(0.269 0 0) dark:focus:ring-oklch(0.556 0 0) dark:group-[.destructive]:border-oklch(0.269 0 0)/40 dark:group-[.destructive]:hover:border-oklch(0.704 0.191 22.216)/30 dark:group-[.destructive]:hover:bg-oklch(0.704 0.191 22.216) dark:group-[.destructive]:focus:ring-oklch(0.704 0.191 22.216)",
+      "inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-gray-200 bg-transparent px-3 text-sm font-medium transition-colors hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-gray-400 disabled:pointer-events-none disabled:opacity-50 group-[.destructive]:border-red-200/40 group-[.destructive]:hover:border-red-200/30 group-[.destructive]:hover:bg-red-200 group-[.destructive]:hover:text-red-700 group-[.destructive]:focus:ring-red-400 dark:border-white/10 dark:hover:bg-gray-700 dark:focus:ring-gray-500 dark:group-[.destructive]:border-red-700/40 dark:group-[.destructive]:hover:border-red-700/30 dark:group-[.destructive]:hover:bg-red-700/50 dark:group-[.destructive]:hover:text-red-200 dark:group-[.destructive]:focus:ring-red-500",
       className
     )}
     {...props}
@@ -77,7 +77,7 @@ const ToastClose = React.forwardRef<
   <ToastPrimitives.Close
     ref={ref}
     className={cn(
-      "absolute right-1 top-1 rounded-md p-1 text-oklch(0.145 0 0)/50 opacity-0 transition-opacity hover:text-oklch(0.145 0 0) focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 dark:text-oklch(0.985 0 0)/50 dark:hover:text-oklch(0.985 0 0)",
+      "absolute right-1 top-1 rounded-md p-1 text-gray-900/50 opacity-0 transition-opacity hover:text-gray-900 focus:opacity-100 focus:outline-none focus:ring-1 group-hover:opacity-100 group-[.destructive]:text-red-300 group-[.destructive]:hover:text-red-50 group-[.destructive]:focus:ring-red-400 group-[.destructive]:focus:ring-offset-red-600 dark:text-gray-100/50 dark:hover:text-gray-100",
       className
     )}
     toast-close=""

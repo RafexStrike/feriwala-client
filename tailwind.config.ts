@@ -13,7 +13,10 @@ const config: Config = {
   			line: 'rgba(23, 20, 16, 0.12)',
   			sky: '#6b98b5',
   			clay: '#c8857b',
-  			honey: '#d2926f'
+  			honey: '#d2926f',
+  			// Dark mode surfaces
+  			'surface-dark': '#2a2622',
+  			'canvas-dark': '#1f1c19',
   		},
   		fontFamily: {
   			display: [

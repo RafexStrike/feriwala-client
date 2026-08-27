@@ -4,13 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/cn"
 
 const alertVariants = cva(
-  "relative w-full rounded-lg border border-oklch(0.922 0 0) px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-oklch(0.145 0 0) [&>svg~*]:pl-7 dark:border-oklch(1 0 0 / 10%) dark:[&>svg]:text-oklch(0.985 0 0)",
+  "relative w-full rounded-lg border border-gray-200 px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-gray-900 [&>svg~*]:pl-7 dark:border-white/10 dark:[&>svg]:text-gray-100",
   {
     variants: {
       variant: {
-        default: "bg-oklch(1 0 0) text-oklch(0.145 0 0) dark:bg-oklch(0.145 0 0) dark:text-oklch(0.985 0 0)",
+        default: "bg-white text-gray-900 dark:bg-surface-dark dark:text-gray-100",
         destructive:
-          "border-oklch(0.577 0.245 27.325)/50 text-oklch(0.577 0.245 27.325) dark:border-oklch(0.577 0.245 27.325) [&>svg]:text-oklch(0.577 0.245 27.325) dark:border-oklch(0.704 0.191 22.216)/50 dark:text-oklch(0.704 0.191 22.216) dark:dark:border-oklch(0.704 0.191 22.216) dark:[&>svg]:text-oklch(0.704 0.191 22.216)",
+          "border-red-200/50 text-red-700 dark:border-red-900 [&>svg]:text-red-700 dark:border-red-900/50 dark:text-red-400 dark:dark:border-red-900 dark:[&>svg]:text-red-400",
       },
     },
     defaultVariants: {
