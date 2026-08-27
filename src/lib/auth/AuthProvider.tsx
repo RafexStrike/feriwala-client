@@ -61,8 +61,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     });
 
     if (!response.ok) {
-      const data = await response.json();
-      throw new Error(data.message || 'Login failed');
+      const data = await response.json().catch(() => ({}));
+      const message = typeof data?.message === 'string' ? data.message : 'Login failed';
+      const normalizedMessage =
+        message === 'Email not verified' || message === 'Email not verified.'
+          ? 'Email not verified. A new verification link has been sent to your email.'
+          : message;
+      throw new Error(normalizedMessage || 'Login failed');
     }
 
     await fetchUser();
