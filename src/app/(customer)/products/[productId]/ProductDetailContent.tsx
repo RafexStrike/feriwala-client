@@ -107,20 +107,20 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
   }
 
   return (
-    <div className="mx-auto w-[min(1180px,calc(100vw-2rem))] py-10">
-      <nav className="flex items-center gap-2 text-sm text-muted" aria-label="Breadcrumb">
+    <div className="mx-auto w-[min(1180px,calc(100vw-1rem))] py-8 sm:py-10">
+      <nav className="flex flex-wrap items-center gap-1 text-sm text-muted sm:gap-2" aria-label="Breadcrumb">
         <a href="/products" className="hover:text-ink">Products</a>
         <ChevronRight className="h-4 w-4" />
         <a href={`/products/${productData.categories[0]?.slug}`} className="hover:text-ink">
           {productData.categories[0]?.name}
         </a>
         <ChevronRight className="h-4 w-4" />
-        <span className="text-ink truncate max-w-[200px]">{productData.name}</span>
+        <span className="max-w-[170px] truncate text-ink sm:max-w-[200px]">{productData.name}</span>
       </nav>
 
-      <div className="mt-8 grid gap-10 lg:grid-cols-2">
+      <div className="mt-8 grid gap-6 lg:grid-cols-2 lg:gap-10">
         <div className="space-y-4">
-          <div className="relative aspect-square rounded-[1.5rem] overflow-hidden bg-canvas">
+          <div className="relative aspect-square overflow-hidden rounded-[1.5rem] bg-canvas">
             {productData.images[0] ? (
               <Image
                 src={productData.images[selectedImage]}
@@ -143,7 +143,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                   key={index}
                   onClick={() => setSelectedImage(index)}
                   className={cn(
-                    "relative h-20 w-20 flex-shrink-0 rounded-lg overflow-hidden border-2 transition-colors",
+                    "relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-lg border-2 transition-colors",
                     index === selectedImage ? "border-sky" : "border-transparent hover:border-line"
                   )}
                   aria-label={`View image ${index + 1}`}
@@ -164,18 +164,9 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                   {productData.categories[0].name}
                 </span>
               )}
-              <h1 className="mt-3 font-display text-3xl lg:text-4xl font-bold tracking-tight text-ink">
+              <h1 className="mt-3 font-display text-2xl font-bold tracking-tight text-ink sm:text-3xl lg:text-4xl">
                 {productData.name}
               </h1>
-            </div>
-            <div className="flex items-center gap-3">
-{/* শেয়ার আর এড টু ফেভরেট বাটন  */}
-              {/* <Button variant="ghost" size="icon" className="rounded-full" aria-label="Share">
-                <Share2 className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Save">
-                <Heart className="h-5 w-5" />
-              </Button> */}
             </div>
           </div>
 
@@ -205,8 +196,33 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
             ))}
           </div>
 
-          <div className="pt-4 border-t border-line">
-            <div className="flex items-center gap-4">
+          <div className="border-t border-line pt-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+              <div className="flex items-center justify-between rounded-full border border-line bg-surface px-2 py-1.5 sm:w-auto">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-full"
+                  onClick={() => setQuantity((current) => Math.max(1, current - 1))}
+                  aria-label="Decrease quantity"
+                >
+                  <Minus className="h-4 w-4" />
+                </Button>
+                <span className="min-w-10 text-center text-sm font-semibold text-ink">{quantity}</span>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  className="h-10 w-10 rounded-full"
+                  onClick={() => setQuantity((current) => Math.min(maxQuantity || 1, current + 1))}
+                  aria-label="Increase quantity"
+                  disabled={maxQuantity > 0 && quantity >= maxQuantity}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+
               <Button
                 size="lg"
                 className="flex-1 gap-2"
@@ -216,52 +232,15 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                 <Truck className="h-5 w-5" />
                 {inStock ? "Add to Cart" : "Out of Stock"}
               </Button>
-              <Button variant="outline" size="lg" className="gap-2">
-                <MessageSquare className="h-5 w-5" />
-                Write a Review
-              </Button>
             </div>
-            <p className="mt-2 text-sm text-muted">
-              {productData.stock} in stock
-            </p>
+            <p className="mt-2 text-sm text-muted">{productData.stock} in stock</p>
           </div>
-
-{/* ওভারল পুরা এপ্লিকেশন এর ফিচার  */}
-          {/* <div className="grid gap-4 text-sm text-muted">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sky/10 text-sky">
-                <Truck className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium text-ink">Free Shipping</p>
-                <p>On orders over $100</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-clay/10 text-clay">
-                <RotateCcw className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium text-ink">Easy Returns</p>
-                <p>30-day return policy</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-honey/10 text-honey">
-                <Shield className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium text-ink">Secure Payment</p>
-                <p>SSL encrypted checkout</p>
-              </div>
-            </div>
-          </div> */}
         </div>
       </div>
 
       <div className="mt-16">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="w-full grid grid-cols-3">
+          <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="description">Description</TabsTrigger>
             <TabsTrigger value="specs">Specifications</TabsTrigger>
             <TabsTrigger value="reviews">Reviews ({reviewCount})</TabsTrigger>
@@ -304,7 +283,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                   {ratingDistribution.map(({ star, count, percentage }) => (
                     <div key={star} className="flex items-center gap-3">
                       <span className="w-8 text-right text-sm text-muted">{star}★</span>
-                      <div className="flex-1 h-2 rounded-full bg-canvas overflow-hidden">
+                      <div className="h-2 flex-1 overflow-hidden rounded-full bg-canvas">
                         <div
                           className="h-full bg-sky transition-all duration-500"
                           style={{ width: `${percentage}%` }}
@@ -325,7 +304,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
               <div className="space-y-4">
                 {reviews.length === 0 ? (
                   <div className="rounded-[1.5rem] border border-line bg-surface p-8 text-center">
-                    <MessageSquare className="h-12 w-12 mx-auto mb-4 text-muted/50" />
+                    <MessageSquare className="mx-auto mb-4 h-12 w-12 text-muted/50" />
                     <h3 className="font-medium text-ink">No reviews yet</h3>
                     <p className="mt-1 text-sm text-muted">Be the first to review this product</p>
                   </div>

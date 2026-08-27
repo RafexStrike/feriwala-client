@@ -76,18 +76,18 @@ function OrderCard({ order }: { order: Order }) {
 
   return (
     <Link href={`/orders/${order._id}`} className="block">
-      <article className="rounded-[1.5rem] border border-line bg-surface p-5 hover:border-ink/15 transition-colors">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <article className="rounded-[1.5rem] border border-line bg-surface p-4 transition-colors hover:border-ink/15 sm:p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
             <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-sky/10 text-sky">
               <Package className="h-6 w-6" />
             </div>
-            <div>
+            <div className="min-w-0">
               <p className="font-medium text-ink">Order #{order._id.slice(-8).toUpperCase()}</p>
               <p className="text-sm text-muted">{formatDate(order.createdAt)} • {itemCount} item{itemCount !== 1 ? "s" : ""}</p>
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center justify-between gap-4 sm:justify-end">
             <Badge className={cn("gap-1.5", statusStyle)} variant="outline">
               <StatusIcon className="h-3 w-3" />
               {order.status.charAt(0).toUpperCase() + order.status.slice(1)}

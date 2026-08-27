@@ -23,19 +23,19 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
     <Link
       href={`/products/${product._id}`}
       className={cn(
-        "group flex h-full flex-col rounded-[1.75rem] border border-line bg-surface p-5 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15 overflow-hidden",
+        "group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-surface p-4 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15 sm:p-5",
         className
       )}
     >
       <div className="flex items-center justify-between gap-3">
-        <span className="rounded-full border border-line px-3 py-1 text-[0.7rem] uppercase tracking-[0.28em] text-muted">
+        <span className="rounded-full border border-line px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.22em] text-muted sm:px-3 sm:text-[0.7rem]">
           {category?.name || "Uncategorized"}
         </span>
-        <span className="text-sm text-ink/70">{formatCurrency(product.price)}</span>
+        <span className="text-xs text-ink/70 sm:text-sm">{formatCurrency(product.price)}</span>
       </div>
-      <div className="mt-5 flex flex-1 flex-col">
+      <div className="mt-4 flex flex-1 flex-col sm:mt-5">
         <div
-          className="mb-6 aspect-[4/3] relative overflow-hidden rounded-[1.35rem] border border-line/70 bg-gradient-to-br"
+          className="relative mb-4 aspect-[4/3] overflow-hidden rounded-[1.35rem] border border-line/70 bg-gradient-to-br sm:mb-6"
           style={{
             backgroundImage: image
               ? `url(${image})`
@@ -50,21 +50,21 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
               alt={product.name}
               fill
               className="object-cover"
-              sizes="200px"
+              sizes="(max-width: 640px) 100vw, 220px"
             />
           )}
         </div>
-        <h3 className="font-display text-2xl leading-none tracking-[-0.02em] text-ink">{product.name}</h3>
+        <h3 className="font-display text-xl leading-none tracking-[-0.02em] text-ink sm:text-2xl">{product.name}</h3>
         <p className="mt-3 text-sm leading-6 text-muted">{product.briefDescription}</p>
       </div>
-      <div className="mt-5 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
         {chips.map((chip) => (
-          <span key={chip} className="rounded-full border border-line bg-canvas px-3 py-1 text-xs text-muted">
+          <span key={chip} className="rounded-full border border-line bg-canvas px-2.5 py-1 text-[10px] text-muted sm:text-xs">
             {chip}
           </span>
         ))}
       </div>
-      <span className="mt-6 inline-flex items-center text-sm text-ink/80 transition-transform duration-300 group-hover:translate-x-1">
+      <span className="mt-5 inline-flex items-center text-sm text-ink/80 transition-transform duration-300 group-hover:translate-x-1 sm:mt-6">
         View product
       </span>
     </Link>
