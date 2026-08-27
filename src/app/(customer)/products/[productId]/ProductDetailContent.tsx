@@ -169,12 +169,13 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
               </h1>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="ghost" size="icon" className="rounded-full" aria-label="Share">
+{/* শেয়ার আর এড টু ফেভরেট বাটন  */}
+              {/* <Button variant="ghost" size="icon" className="rounded-full" aria-label="Share">
                 <Share2 className="h-5 w-5" />
               </Button>
               <Button variant="ghost" size="icon" className="rounded-full" aria-label="Save">
                 <Heart className="h-5 w-5" />
-              </Button>
+              </Button> */}
             </div>
           </div>
 
@@ -221,11 +222,12 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
               </Button>
             </div>
             <p className="mt-2 text-sm text-muted">
-              {productData.stock} in stock • Free shipping over $100 • 30-day returns
+              {productData.stock} in stock
             </p>
           </div>
 
-          <div className="grid gap-4 text-sm text-muted">
+{/* ওভারল পুরা এপ্লিকেশন এর ফিচার  */}
+          {/* <div className="grid gap-4 text-sm text-muted">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sky/10 text-sky">
                 <Truck className="h-5 w-5" />
@@ -253,7 +255,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
                 <p>SSL encrypted checkout</p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
