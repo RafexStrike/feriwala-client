@@ -164,8 +164,8 @@ export interface ProductQueryParams {
   page?: number;
   limit?: number;
   search?: string;
-  categoryId?: string;
-  tagId?: string;
+  categoryId?: string | string[];
+  tagId?: string | string[];
   isActive?: boolean;
   sort?: string;
 }
