@@ -122,18 +122,11 @@ function OrderDetailContent({ orderId }: OrderDetailContentProps) {
             </p>
           </div>
 
-          <div className="rounded-[1.5rem] border border-line bg-surface p-6">
+{/* payment method can be added in this section if we want */}
+          {/* <div className="rounded-[1.5rem] border border-line bg-surface p-6">
             <h3 className="font-medium text-ink mb-4">Payment Method</h3>
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-clay/10 text-clay">
-                <CreditCard className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="font-medium text-ink">Credit/Debit Card</p>
-                <p className="text-sm text-muted">Secure payment processing</p>
-              </div>
-            </div>
-          </div>
+        
+          </div> */}
         </aside>
       </div>
     </div>

@@ -244,14 +244,14 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
                 </div>
               </div>
               <div className="mt-4 pt-4 border-t border-line space-y-2 text-xs text-muted">
-                <div className="flex items-center gap-2">
+                {/* <div className="flex items-center gap-2">
                   <Shield className="h-4 w-4" />
                   <span>Secure checkout</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CreditCard className="h-4 w-4" />
                   <span>All major cards accepted</span>
-                </div>
+                </div> */}
               </div>
             </div>
           </aside>
