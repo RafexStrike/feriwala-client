@@ -1,12 +1,18 @@
 "use client";
 
-import { memo } from "react";
-import { RoundedBox } from "@react-three/drei";
-import { forwardRef } from "react";
+import { memo, forwardRef, useState, useEffect } from "react";
+import { Canvas } from "@react-three/fiber";
+import { RoundedBox, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { PrimitiveRig, primitiveMaterials, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
-function LampComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
+// ==========================================
+// 1. Lamp Component
+// ==========================================
+function LampComponent(
+  { scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps,
+  ref: React.ForwardedRef<THREE.Group>
+) {
   const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
   const accent = usePrimitiveColor(accentColor, primitiveMaterials.glowHoney.color);
   const detail = usePrimitiveColor(detailColor, "#9C8E80");
@@ -43,5 +49,33 @@ function LampComponent({ scale, position, rotation, bodyColor, accentColor, deta
 }
 
 export const Lamp = memo(forwardRef(LampComponent));
-
 export type { PrimitiveProps as LampProps };
+
+// ==========================================
+// 2. Main Next.js Page Export
+// ==========================================
+export default function LampPage() {
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Prevent SSR execution for Three.js WebGL canvas context
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <div style={{ width: "100vw", height: "100vh", backgroundColor: "#0a0a0c" }} />;
+  }
+
+  return (
+    <main style={{ width: "100vw", height: "100vh", backgroundColor: "#0a0a0c" }}>
+      <Canvas camera={{ position: [2.5, 1.8, 2.8], fov: 45 }}>
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[4, 6, 5]} intensity={1.5} />
+
+        <Lamp position={[0, 0, 0]} />
+
+        <OrbitControls makeDefault minDistance={1} maxDistance={10} />
+      </Canvas>
+    </main>
+  );
+}

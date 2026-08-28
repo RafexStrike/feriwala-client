@@ -2,6 +2,7 @@ import { homepageContent } from "@/content/homepage";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
+import DeskScene3D from "@/components/three/primitives/DeskScene3D"
 
 export function Hero() {
   return (
@@ -28,7 +29,7 @@ export function Hero() {
 
         <div className="relative" data-reveal>
           <div className="absolute inset-0 -z-10 rounded-[2.5rem] bg-[radial-gradient(circle_at_50%_50%,rgba(107,152,181,0.15),transparent 32%)]" />
-          <div className="relative min-h-[28rem] lg:min-h-[42rem] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-surface/30 to-canvas/20 border border-line/30">
+          {/* <div className="relative min-h-[28rem] lg:min-h-[42rem] rounded-[2.5rem] overflow-hidden bg-gradient-to-br from-surface/30 to-canvas/20 border border-line/30">
             <Image
                src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80"
               alt="Premium desk setup"
@@ -37,7 +38,8 @@ export function Hero() {
               priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent" />
-          </div>
+          </div> */}
+            <DeskScene3D />
         </div>
       </div>
     </section>

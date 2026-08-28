@@ -1,8 +1,7 @@
 "use client";
 
-import { memo, useMemo } from "react";
+import { memo, useMemo, forwardRef } from "react";
 import { RoundedBox } from "@react-three/drei";
-import { forwardRef } from "react";
 import * as THREE from "three";
 import { primitiveMaterials, PrimitiveRig, type PrimitiveProps, usePrimitiveColor } from "./shared";
 
@@ -10,67 +9,166 @@ type KeySpec = {
   position: [number, number, number];
   size: [number, number, number];
   rotation?: [number, number, number];
+  color?: string;
+  isAccent?: boolean;
 };
 
-function Key({ position, size, rotation = [0, 0, 0], color }: KeySpec & { color: string }) {
+// Realistic OEM Keycap with slight top sculpt & subtle bevel
+function Keycap({ position, size, rotation = [0, 0, 0], color, isAccent }: KeySpec & { color: string }) {
   return (
-    <RoundedBox args={size} radius={0.05} smoothness={5} position={position} rotation={rotation}>
-      <meshStandardMaterial color={color} roughness={0.62} metalness={0.02} envMapIntensity={0.45} />
-    </RoundedBox>
+    <group position={position} rotation={rotation}>
+      {/* Switch Stem Base (Subtle realism under keycaps) */}
+      <mesh position={[0, -size[1] / 2 + 0.005, 0]}>
+        <boxGeometry args={[0.04, 0.015, 0.04]} />
+        <meshStandardMaterial color="#111111" roughness={0.3} />
+      </mesh>
+      {/* Main Keycap Shell */}
+      <RoundedBox args={size} radius={0.012} smoothness={4} position={[0, 0, 0]}>
+        <meshStandardMaterial
+          color={color}
+          roughness={isAccent ? 0.45 : 0.65} // Matte PBT texture
+          metalness={0.05}
+          envMapIntensity={0.8}
+        />
+      </RoundedBox>
+    </group>
   );
 }
 
-function KeyboardComponent({ scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps, ref: React.ForwardedRef<THREE.Group>) {
-  const shellColor = usePrimitiveColor(bodyColor, primitiveMaterials.shell.color);
-  const keyColor = usePrimitiveColor(detailColor, "#D9D1C7");
-  const accent = usePrimitiveColor(accentColor, primitiveMaterials.accentSky.color);
+function KeyboardComponent(
+  { scale, position, rotation, bodyColor, accentColor, detailColor, animation }: PrimitiveProps,
+  ref: React.ForwardedRef<THREE.Group>
+) {
+  // Color palette defaults for a premium matte black keyboard (e.g., Keychron / Drop)
+  const caseColor = usePrimitiveColor(bodyColor, "#121214"); // Dark Anodized Aluminum
+  const defaultKeyColor = usePrimitiveColor(detailColor, "#1A1A1E"); // Matte Charcoal/Black PBT
+  const modifierKeyColor = "#26262B"; // Slightly lighter dark gray for mods
+  const accentKeyColor = usePrimitiveColor(accentColor, "#D0382B"); // Red Escape key or accent accent
 
-  const keys = useMemo<KeySpec[]>(
-    () => [
-      ...Array.from({ length: 12 }, (_, index) => ({
-        position: [-0.82 + index * 0.15, 0.28, 0] as [number, number, number],
-        size: [0.11, 0.05, 0.11 + (index % 3) * 0.008] as [number, number, number],
-      })) as KeySpec[],
-      ...Array.from({ length: 12 }, (_, index) => ({
-        position: [-0.74 + index * 0.15, 0.08, 0] as [number, number, number],
-        size: [0.11, 0.05, 0.108 + (index % 2) * 0.006] as [number, number, number],
-      })) as KeySpec[],
-      ...Array.from({ length: 11 }, (_, index) => ({
-        position: [-0.66 + index * 0.15, -0.12, 0] as [number, number, number],
-        size: [0.11, 0.05, 0.106 + (index % 4) * 0.005] as [number, number, number],
-      })) as KeySpec[],
-      { position: [-0.48, -0.33, 0], size: [0.24, 0.05, 0.11] as [number, number, number] },
-      { position: [-0.16, -0.33, 0], size: [0.16, 0.05, 0.11] as [number, number, number] },
-      { position: [0.09, -0.33, 0], size: [0.7, 0.05, 0.11] as [number, number, number] },
-      { position: [0.58, -0.33, 0], size: [0.16, 0.05, 0.11] as [number, number, number] },
-      { position: [0.81, -0.33, 0], size: [0.18, 0.05, 0.11] as [number, number, number] },
-    ],
-    [],
-  );
+  const keys = useMemo<KeySpec[]>(() => {
+    const keyList: KeySpec[] = [];
+    const unit = 0.088; // 1U key dimension step
+    const gap = 0.005; // Gap between keys
+    const step = unit + gap;
+    const startX = -0.72;
+    const keyHeight = 0.042;
+
+    // Row definitions [keyUnits, isModifier, customColor]
+    const layout: Array<Array<{ u: number; mod?: boolean; accent?: boolean }>> = [
+      // Row 1: Function / Top Row (F1-F12 + Esc + Del)
+      [
+        { u: 1, accent: true }, // Esc
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1, mod: true }, // Del
+      ],
+      // Row 2: Numbers (tilde to Backspace)
+      [
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 2, mod: true }, // Backspace
+      ],
+      // Row 3: QWERTY + Tab
+      [
+        { u: 1.5, mod: true }, // Tab
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1.5, mod: true }, // Pipe/Slash
+      ],
+      // Row 4: Home row + Caps Lock + Enter
+      [
+        { u: 1.75, mod: true }, // Caps Lock
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 1 }, { u: 1 }, { u: 1 }, { u: 1 },
+        { u: 2.25, accent: true }, // Enter
+      ],
+      // Row 5: Bottom row with Spacebar
+      [
+        { u: 1.25, mod: true }, // Ctrl
+        { u: 1.25, mod: true }, // Win
+        { u: 1.25, mod: true }, // Alt
+        { u: 6.25 },            // Spacebar
+        { u: 1.25, mod: true }, // Alt
+        { u: 1.25, mod: true }, // Fn
+        { u: 1.25, mod: true }, // Ctrl
+      ],
+    ];
+
+    const rowZOffsets = [-0.22, -0.11, 0.0, 0.11, 0.22];
+    const rowAngles = [0.08, 0.05, 0.02, -0.01, -0.04]; // OEM profile angle sculpting per row
+
+    layout.forEach((row, rowIndex) => {
+      let currentX = startX;
+      const zPos = rowZOffsets[rowIndex];
+      const rowRotation = rowAngles[rowIndex];
+
+      row.forEach((k) => {
+        const width = k.u * unit + (k.u - 1) * gap;
+        const xPos = currentX + width / 2;
+
+        let color = defaultKeyColor;
+        if (k.accent) color = accentKeyColor;
+        else if (k.mod) color = modifierKeyColor;
+
+        keyList.push({
+          position: [xPos, 0.125, zPos],
+          size: [width, keyHeight, unit],
+          rotation: [rowRotation, 0, 0],
+          color,
+          isAccent: k.accent,
+        });
+
+        currentX += width + gap;
+      });
+    });
+
+    return keyList;
+  }, [defaultKeyColor, modifierKeyColor, accentKeyColor]);
 
   return (
     <PrimitiveRig ref={ref} scale={scale} position={position} rotation={rotation} animation={animation}>
-      <group>
-        <RoundedBox args={[2.55, 0.28, 1.02]} radius={0.18} smoothness={8}>
-          <meshStandardMaterial color={shellColor} roughness={0.8} metalness={0.03} envMapIntensity={0.65} />
+      {/* Entire Keyboard tilted forward 6 degrees for standard ergonomic incline */}
+      <group rotation={[0.1, 0, 0]}>
+        
+        {/* Main Base Chassis (Anodized Aluminum Case) */}
+        <RoundedBox args={[1.68, 0.12, 0.64]} radius={0.02} smoothness={6} position={[0, 0.05, 0]}>
+          <meshStandardMaterial
+            color={caseColor}
+            roughness={0.4}
+            metalness={0.82}
+            envMapIntensity={1.2}
+          />
         </RoundedBox>
-        <RoundedBox args={[2.38, 0.05, 0.88]} radius={0.08} smoothness={6} position={[0, 0.14, -0.02]}>
-          <meshStandardMaterial color={accent} roughness={0.36} metalness={0.03} emissive={accent} emissiveIntensity={0.04} />
+
+        {/* Recessed Switch Mounting Plate (Brass / Dark Steel) */}
+        <RoundedBox args={[1.58, 0.02, 0.54]} radius={0.005} smoothness={4} position={[0, 0.102, 0]}>
+          <meshStandardMaterial color="#1A1817" roughness={0.3} metalness={0.6} />
         </RoundedBox>
-        <mesh position={[-1.03, 0.14, 0.34]}>
-          <boxGeometry args={[0.14, 0.04, 0.11]} />
-          <meshStandardMaterial color="#A89687" roughness={0.52} metalness={0.02} />
+
+        {/* Status Indicator LED lights (Num Lock / Caps Lock) */}
+        <mesh position={[0.72, 0.115, -0.22]}>
+          <cylinderGeometry args={[0.006, 0.006, 0.005, 12]} />
+          <meshStandardMaterial color="#33FF66" emissive="#33FF66" emissiveIntensity={0.8} />
         </mesh>
-        <mesh position={[-0.86, 0.14, 0.34]}>
-          <boxGeometry args={[0.14, 0.04, 0.11]} />
-          <meshStandardMaterial color="#A89687" roughness={0.52} metalness={0.02} />
+        <mesh position={[0.74, 0.115, -0.22]}>
+          <cylinderGeometry args={[0.006, 0.006, 0.005, 12]} />
+          <meshStandardMaterial color="#111111" roughness={0.5} />
         </mesh>
-        <mesh position={[-0.69, 0.14, 0.34]}>
-          <boxGeometry args={[0.14, 0.04, 0.11]} />
-          <meshStandardMaterial color="#A89687" roughness={0.52} metalness={0.02} />
-        </mesh>
-        {keys.map((key, index) => (
-          <Key key={index} {...key} color={keyColor} />
+
+        {/* Rubber Feet (Bottom Case Realism) */}
+        {[-0.75, 0.75].map((x, i) =>
+          [-0.26, 0.26].map((z, j) => (
+            <mesh key={`${i}-${j}`} position={[x, -0.012, z]}>
+              <cylinderGeometry args={[0.025, 0.025, 0.01, 16]} />
+              <meshStandardMaterial color="#080808" roughness={0.9} />
+            </mesh>
+          ))
+        )}
+
+        {/* Render Keycaps */}
+        {keys.map((keyProps, index) => (
+          <Keycap key={index} {...keyProps} color={keyProps.color || defaultKeyColor} />
         ))}
       </group>
     </PrimitiveRig>
