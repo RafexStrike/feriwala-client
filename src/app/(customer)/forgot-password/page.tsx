@@ -131,6 +131,7 @@ export default function ForgotPasswordPage() {
           </form>
         )}
 
+        {/*
         <Separator className="my-8">Or</Separator>
 
         <div className="grid grid-cols-2 gap-3">
@@ -150,6 +151,7 @@ export default function ForgotPasswordPage() {
             GitHub
           </Button>
         </div>
+        */}
 
         <p className="mt-6 text-center text-sm text-muted">
           Remember your password?{" "}

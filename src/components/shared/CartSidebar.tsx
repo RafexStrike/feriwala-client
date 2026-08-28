@@ -8,6 +8,9 @@ import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, Drawer
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/utils/format";
 import { useCart } from "@/lib/hooks/useCart";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
 import type { CartItem } from "@/lib/api/types";
 
 interface CartItemProps {
@@ -76,9 +79,49 @@ export function CartItem({ item, onQuantityChange, onRemove }: CartItemProps) {
 
 export function CartSidebar() {
   const { cart, isLoading, itemCount, subtotal, updateQuantity, removeItem, clearCart } = useCart();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
   const cartItems = cart?.items ?? [];
   const shipping = subtotal >= 100 ? 0 : subtotal > 0 ? 9.99 : 0;
   const total = subtotal + shipping;
+
+  const handleQuantityChange = (productId: string, quantity: number) => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    updateQuantity(productId, quantity);
+  };
+
+  const handleRemove = (productId: string) => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    removeItem(productId);
+  };
+
+  const handleClear = () => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    clearCart();
+  };
+
+  const handleProceed = (e?: any) => {
+    e?.preventDefault();
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to proceed to checkout.", variant: "destructive" });
+      router.push(`/login?redirect=${encodeURIComponent("/checkout")}`);
+      return;
+    }
+
+    router.push("/checkout");
+  };
 
   return (
     <Drawer>
@@ -144,8 +187,8 @@ export function CartSidebar() {
                 <CartItem
                   key={item.product._id}
                   item={item}
-                  onQuantityChange={updateQuantity}
-                  onRemove={removeItem}
+                  onQuantityChange={handleQuantityChange}
+                  onRemove={handleRemove}
                 />
               ))}
             </div>
@@ -189,19 +232,19 @@ export function CartSidebar() {
 
               {/* Action Buttons */}
               <div className="space-y-2.5 pt-2">
-                <Button 
-                  className="w-full h-11 bg-gradient-to-r from-clay to-honey hover:from-clay/90 hover:to-honey/90 text-white font-semibold gap-2 shadow-lg hover:shadow-xl transition-all" 
-                  asChild
+                <Button
+                  className="w-full h-11 bg-gradient-to-r from-clay to-honey hover:from-clay/90 hover:to-honey/90 text-white font-semibold gap-2 shadow-lg hover:shadow-xl transition-all"
+                  onClick={handleProceed}
                 >
-                  <a href="/checkout" className="flex items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-2">
                     Proceed to Checkout
                     <ArrowRight className="h-4 w-4" />
-                  </a>
+                  </div>
                 </Button>
-                <Button 
-                  variant="outline" 
+                <Button
+                  variant="outline"
                   className="w-full h-10 border-2 border-sky/20 hover:bg-sky/5 text-ink hover:text-sky font-medium transition-all"
-                  onClick={clearCart}
+                  onClick={handleClear}
                 >
                   Clear Cart
                 </Button>

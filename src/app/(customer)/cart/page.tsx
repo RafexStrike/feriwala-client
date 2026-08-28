@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/utils/format";
 import { useCart } from "@/lib/hooks/useCart";
+import { useAuth } from "@/lib/auth/AuthProvider";
+import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { PageHeader } from "@/components/shared/PageHeader";
 import type { CartItem } from "@/lib/api/types";
@@ -76,6 +79,45 @@ function CartItemComponent({ item, onQuantityChange, onRemove }: CartItemProps) 
 
 export default function CartPage() {
   const { cart, isLoading, itemCount, subtotal, updateQuantity, removeItem, clearCart, refetch } = useCart();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  const handleQuantityChange = (productId: string, quantity: number) => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    updateQuantity(productId, quantity);
+  };
+
+  const handleRemove = (productId: string) => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    removeItem(productId);
+  };
+
+  const handleClear = () => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to manage your cart.", variant: "destructive" });
+      return;
+    }
+
+    clearCart();
+  };
+
+  const handleProceed = () => {
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to proceed to checkout.", variant: "destructive" });
+      router.push(`/login?redirect=${encodeURIComponent("/checkout")}`);
+      return;
+    }
+
+    router.push("/checkout");
+  };
   const shipping = subtotal >= 100 ? 0 : subtotal > 0 ? 9.99 : 0;
   const total = subtotal + shipping;
 
@@ -121,8 +163,8 @@ export default function CartPage() {
               <CartItemComponent
                 key={item.product._id}
                 item={item}
-                onQuantityChange={updateQuantity}
-                onRemove={removeItem}
+                onQuantityChange={handleQuantityChange}
+                onRemove={handleRemove}
               />
             ))}
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -132,7 +174,7 @@ export default function CartPage() {
                   Continue Shopping
                 </a>
               </Button>
-              <Button variant="outline" onClick={clearCart} className="w-full sm:w-auto">
+              <Button variant="outline" onClick={handleClear} className="w-full sm:w-auto">
                 <Trash2 className="mr-2 h-4 w-4" />
                 Clear Cart
               </Button>
@@ -163,11 +205,11 @@ export default function CartPage() {
                   <span className="text-ink">{formatCurrency(total)}</span>
                 </div>
               </div>
-              <Button className="mt-6 w-full" asChild size="lg">
-                <a href="/checkout" className="flex items-center justify-center gap-2">
+              <Button className="mt-6 w-full" size="lg" onClick={handleProceed}>
+                <div className="flex items-center justify-center gap-2">
                   Proceed to Checkout
                   <ArrowRight className="h-4 w-4" />
-                </a>
+                </div>
               </Button>
             </div>
           </aside>

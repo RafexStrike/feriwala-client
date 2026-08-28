@@ -145,6 +145,7 @@ export default function RegisterPage() {
           </Button>
         </form>
 
+        {/*
         <Separator className="my-8">Or continue with</Separator>
 
         <div className="grid grid-cols-2 gap-3">
@@ -157,6 +158,7 @@ export default function RegisterPage() {
             GitHub
           </Button>
         </div>
+        */}
 
         <p className="mt-6 text-center text-sm text-muted">
           Already have an account?{" "}

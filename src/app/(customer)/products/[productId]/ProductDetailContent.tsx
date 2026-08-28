@@ -18,7 +18,7 @@ import { useCart } from "@/lib/hooks/useCart";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { useRequireVerified } from "@/lib/auth/hooks";
 import { formatDate, formatCurrency } from "@/lib/utils/format";
-import { toast } from "sonner";
+import { toast } from "@/hooks/use-toast";
 import type { ProductDetail, Review } from "@/types/api";
 
 interface ProductDetailContentProps {
@@ -52,8 +52,18 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
 
   const handleAddToCart = async () => {
     if (!inStock) return;
-    await addItem({ productId, quantity });
-    setQuantity(1);
+    if (!isAuthenticated) {
+      toast({ title: "You need to sign in to add products to your cart.", variant: "destructive" });
+      return;
+    }
+
+    try {
+      await addItem({ productId, quantity });
+      setQuantity(1);
+      toast({ title: "Added to cart" });
+    } catch (err: any) {
+      toast({ title: err?.message || "Failed to add to cart", variant: "destructive" });
+    }
   };
 
   const handleReviewSubmit = async (e: React.FormEvent) => {
@@ -62,6 +72,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
 
     if (!isAuthenticated) {
       setShowReviewDialog(false);
+      toast({ title: "You need to sign in to write a review.", variant: "destructive" });
       return;
     }
 
@@ -82,7 +93,7 @@ export function ProductDetailContent({ initialProduct, productId }: ProductDetai
     try {
       await deleteReviewMutation.mutateAsync(productId);
     } catch (err: any) {
-      toast.error(err.message || "Failed to delete review");
+      toast({ title: err.message || "Failed to delete review", variant: "destructive" });
     }
   };
 
