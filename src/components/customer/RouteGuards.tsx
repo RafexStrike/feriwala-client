@@ -85,18 +85,27 @@ export function AdminRoute({ children }: ProtectedRouteProps) {
 export function PublicRoute({ children }: ProtectedRouteProps) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
+      // Allow authenticated users to access the password reset pages
+      if (pathname === '/forgot-password' || pathname?.startsWith('/reset-password')) {
+        return;
+      }
       router.push('/');
     }
-  }, [isAuthenticated, isLoading, router]);
+  }, [isAuthenticated, isLoading, router, pathname]);
 
   if (isLoading) {
     return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
   }
 
   if (isAuthenticated) {
+    // If we're on the forgot/reset pages, still render the children.
+    if (typeof pathname === 'string' && (pathname === '/forgot-password' || pathname.startsWith('/reset-password'))) {
+      return <>{children}</>;
+    }
     return null;
   }
 
