@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { useAuth } from "@/lib/auth/AuthProvider";
+import { getAuthUrl } from "@/lib/auth/config";
 import { registerSchema, type RegisterInput } from "@/lib/utils/validation";
 import { PublicRoute } from "@/components/customer/RouteGuards";
 import { toast } from "sonner";
@@ -145,11 +146,16 @@ export default function RegisterPage() {
           </Button>
         </form>
 
-        {/*
         <Separator className="my-8">Or continue with</Separator>
 
         <div className="grid grid-cols-2 gap-3">
-          <Button variant="outline" className="gap-2" disabled>
+          <Button
+            variant="outline"
+            className="gap-2"
+            onClick={() => {
+              window.location.href = getAuthUrl('/api/auth/sign-in/google');
+            }}
+          >
             <svg className="h-5 w-5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg>
             Google
           </Button>
@@ -158,7 +164,6 @@ export default function RegisterPage() {
             GitHub
           </Button>
         </div>
-        */}
 
         <p className="mt-6 text-center text-sm text-muted">
           Already have an account?{" "}
