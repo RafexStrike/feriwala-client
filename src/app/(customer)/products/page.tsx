@@ -234,6 +234,7 @@ function ProductsContent() {
               isMobile
               isOpen={isMobileFiltersOpen}
               onOpenChange={setIsMobileFiltersOpen}
+              showSearchInput={false}
             />
           </div>
 

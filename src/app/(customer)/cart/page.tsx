@@ -153,7 +153,7 @@ export default function CartPage() {
                   <span className="text-right font-medium text-ink">
                     {shipping === 0 ? "Free" : formatCurrency(shipping)}
                     {subtotal > 0 && subtotal < 100 && (
-                      <span className="ml-2 block text-xs text-muted sm:inline">(Free over $100)</span>
+                      <span className="ml-2 block text-xs text-muted sm:inline">(Free over ৳100)</span>
                     )}
                   </span>
                 </div>

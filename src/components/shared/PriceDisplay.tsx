@@ -12,14 +12,15 @@ interface PriceDisplayProps {
 export function PriceDisplay({
   price,
   originalPrice,
-  currency = 'USD',
-  locale = 'en-US',
+  currency = 'BDT',
+  locale = 'en-BD',
   className,
   showCurrencySymbol = true,
 }: PriceDisplayProps) {
   const formatter = new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
+    currencyDisplay: 'narrowSymbol',
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
@@ -38,14 +39,17 @@ export function PriceDisplay({
 }
 
 export function PriceRange({ min, max, ...props }: { min: number; max: number } & Omit<PriceDisplayProps, 'price'>) {
-  if (min === max) return <PriceDisplay price={min} {...props} />;
+  const locale = props.locale ?? 'en-BD';
+  const currency = props.currency ?? 'BDT';
+
+  if (min === max) return <PriceDisplay price={min} {...props} locale={locale} currency={currency} />;
   
   return (
     <div className={cn('flex items-baseline gap-2', props.className)}>
       <span className="font-medium text-ink">
-        {new Intl.NumberFormat(props.locale, { style: 'currency', currency: props.currency }).format(min)}
+        {new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay: 'narrowSymbol' }).format(min)}
         {' '}–{' '}
-        {new Intl.NumberFormat(props.locale, { style: 'currency', currency: props.currency }).format(max)}
+        {new Intl.NumberFormat(locale, { style: 'currency', currency, currencyDisplay: 'narrowSymbol' }).format(max)}
       </span>
     </div>
   );

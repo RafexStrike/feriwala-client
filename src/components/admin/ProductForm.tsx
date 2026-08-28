@@ -141,7 +141,7 @@ export function ProductForm({ product, mode }: ProductFormProps) {
             name="price"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Price ($)</FormLabel>
+                <FormLabel>Price (৳)</FormLabel>
                 <FormControl>
                   <Input
                     type="number"
@@ -161,7 +161,7 @@ export function ProductForm({ product, mode }: ProductFormProps) {
             name="costPrice"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cost Price ($)</FormLabel>
+                <FormLabel>Cost Price (৳)</FormLabel>
                 <FormControl>
                   <Input
                     type="number"

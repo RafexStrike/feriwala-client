@@ -233,7 +233,7 @@ function CheckoutForm({ redirectTo }: { redirectTo: string }) {
                     <span className="font-medium text-ink">
                       {shipping === 0 ? "Free" : formatCurrency(shipping)}
                       {subtotal > 0 && subtotal < 100 && (
-                        <span className="ml-2 text-xs text-muted">(Free over $100)</span>
+                        <span className="ml-2 text-xs text-muted">(Free over ৳100)</span>
                       )}
                     </span>
                   </div>

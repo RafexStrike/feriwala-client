@@ -40,6 +40,7 @@ interface ProductFiltersProps {
   isMobile?: boolean;
   isOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  showSearchInput?: boolean;
 }
 
 function FilterSection({
@@ -91,6 +92,7 @@ export function ProductFilters({
   isMobile = false,
   isOpen = false,
   onOpenChange,
+  showSearchInput = true,
 }: ProductFiltersProps) {
   const [searchValue, setSearchValue] = useState(searchQuery);
   const [categoriesExpanded, setCategoriesExpanded] = useState(true);
@@ -122,7 +124,7 @@ export function ProductFilters({
     selectedTags.length +
     Number(sortValue !== "newest");
 
-  const content = (
+  const searchSection = showSearchInput ? (
     <>
       <form onSubmit={handleSearchSubmit} className="relative" aria-label="Search products">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
@@ -137,6 +139,12 @@ export function ProductFilters({
       </form>
 
       <Separator />
+    </>
+  ) : null;
+
+  const content = (
+    <>
+      {searchSection}
 
       <div className="space-y-5">
         <FilterSection title="Categories" expanded={categoriesExpanded} onToggle={() => setCategoriesExpanded((value) => !value)}>

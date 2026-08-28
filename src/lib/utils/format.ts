@@ -1,12 +1,13 @@
 export function formatCurrency(
   amount: number,
-  currency = 'USD',
-  locale = 'en-US',
+  currency = 'BDT',
+  locale = 'en-BD',
   options: Intl.NumberFormatOptions = {}
 ): string {
   return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
+    currencyDisplay: 'narrowSymbol',
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
     ...options,
