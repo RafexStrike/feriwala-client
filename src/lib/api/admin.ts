@@ -33,9 +33,15 @@ export async function getInventory() {
   return apiClient.get<InventorySummary>(`/admin/inventory`);
 }
 
-// Products
-export async function getAdminProducts() {
-  return apiClient.get<ProductBrief[]>(`/products`);
+export async function getAdminProducts(): Promise<ProductBrief[]> {
+  const response = await apiClient.get<any>(`/products`);
+  if (Array.isArray(response)) {
+    return response;
+  }
+  if (response && typeof response === 'object' && Array.isArray(response.data)) {
+    return response.data;
+  }
+  return [];
 }
 
 export async function getAdminProduct(productId: string) {
@@ -56,6 +62,10 @@ export async function updateProductInventory(productId: string, stock: number) {
 
 export async function deleteProduct(productId: string) {
   return apiClient.delete<{ message: string }>(`/products/${productId}`);
+}
+
+export async function updateFeaturedProduct(productId: string, isFeatured: boolean) {
+  return apiClient.patch<ProductDetail>(`/products/${productId}/featured`, { isFeatured });
 }
 
 // Categories

@@ -7,6 +7,7 @@ import {
   createReview,
   deleteReview,
   getProductReviews,
+  getFeaturedProducts,
   type ProductQueryParams,
   type ProductBrief,
   type ProductDetail,
@@ -29,6 +30,13 @@ export function useProduct(productId: string) {
     queryKey: ['product', productId],
     queryFn: () => getProduct(productId),
     enabled: !!productId,
+  });
+}
+
+export function useFeaturedProducts() {
+  return useQuery({
+    queryKey: ['products', 'featured'],
+    queryFn: getFeaturedProducts,
   });
 }
 

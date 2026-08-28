@@ -25,6 +25,7 @@ export interface ProductBrief {
   tags: Tag[];
   images: string[];
   isActive: boolean;
+  isFeatured: boolean;
   averageRating: number;
   reviewCount: number;
   createdAt: string;
@@ -163,6 +164,7 @@ export interface ProductCreateInput {
 
 export interface ProductUpdateInput extends Partial<ProductCreateInput> {
   isActive?: boolean;
+  isFeatured?: boolean;
 }
 
 export interface CategoryInput {

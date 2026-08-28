@@ -8,6 +8,7 @@ import {
   createProduct,
   updateProduct,
   updateProductInventory,
+  updateFeaturedProduct,
   deleteProduct,
   getAdminCategories,
   createCategory,
@@ -119,6 +120,19 @@ export function useDeleteProduct() {
     mutationFn: (productId: string) => deleteProduct(productId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
+    },
+  });
+}
+
+export function useUpdateFeaturedProduct() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ productId, isFeatured }: { productId: string; isFeatured: boolean }) =>
+      updateFeaturedProduct(productId, isFeatured),
+    onSuccess: (_, { productId }) => {
+      queryClient.invalidateQueries({ queryKey: ["admin", "products"] });
+      queryClient.invalidateQueries({ queryKey: ["admin", "product", productId] });
+      queryClient.invalidateQueries({ queryKey: ["products", "featured"] });
     },
   });
 }

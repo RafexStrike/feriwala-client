@@ -73,6 +73,17 @@ export async function getProduct(productId: string) {
   return apiClient.get<ProductDetail>(`/products/${productId}`);
 }
 
+export async function getFeaturedProducts(): Promise<ProductBrief[]> {
+  const response = await apiClient.get<any>(`/products/featured`);
+  if (Array.isArray(response)) {
+    return response;
+  }
+  if (response && typeof response === 'object' && Array.isArray(response.data)) {
+    return response.data;
+  }
+  return [];
+}
+
 export async function getProductReviews(productId: string) {
   return apiClient.get<Review[]>(`/products/${productId}/reviews`);
 }

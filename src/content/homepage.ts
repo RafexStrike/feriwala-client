@@ -51,7 +51,6 @@ export const homepageContent = {
     title: "Start exploring.",
     description: "A selection of our most popular and highest-rated items.",
     cta: "Browse all products",
-    products: featuredProducts.slice(0, 6),
   },
   trust: {
     eyebrow: "Why trust us",

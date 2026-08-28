@@ -2,7 +2,7 @@ import { homepageContent } from "@/content/homepage";
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Reveal } from "@/components/ui/Reveal";
 import Image from "next/image";
-import DeskScene3D from "@/components/three/primitives/DeskScene3D"
+// import DeskScene3D from "@/components/three/primitives/DeskScene3D"
 
 export function Hero() {
   return (
@@ -39,9 +39,10 @@ export function Hero() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-ink/20 via-transparent to-transparent" />
           </div> */}
-            <DeskScene3D />
+
         </div>
       </div>
     </section>
   );
 }
+
