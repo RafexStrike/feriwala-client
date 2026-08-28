@@ -154,7 +154,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
               <DropdownMenuItem asChild>
                 <Link href="/products" className="flex items-center gap-2">
                   <LayoutDashboard className="h-4 w-4" />
-                  View Storefront
+                  View Product Page
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />

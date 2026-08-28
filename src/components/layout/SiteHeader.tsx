@@ -15,6 +15,10 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { user, isLoading, logout, isAuthenticated, isAdmin } = useAuth();
 
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   if (pathname === "/") {
     return (
       <header className="sticky top-0 z-50 border-b border-line/60 bg-canvas/80 backdrop-blur-xl">
