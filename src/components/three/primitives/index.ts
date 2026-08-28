@@ -1,5 +1,4 @@
 export { Dock } from "./Dock";
-export { Gadget } from "./Gadget";
 export { Hub } from "./Hub";
 export { Keyboard } from "./Keyboard";
 export { Lamp } from "./Lamp";

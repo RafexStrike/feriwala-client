@@ -11,7 +11,7 @@ import { DEBUG_3D, FALLBACK_TEST } from "@/config/debug";
 import { PRIMITIVE_NORMALIZATION } from "@/config/objectSizing";
 import { palette, sceneSurfaces } from "@/config/materials";
 import type { SceneItem } from "@/config/three";
-import { Dock, Gadget, Hub, Keyboard, Lamp, Mouse, Speaker, ToolKit } from "./primitives";
+import { Dock, Hub, Keyboard, Lamp, Mouse, Speaker, ToolKit } from "./primitives";
 
 const primitiveMap = {
   keyboard: Keyboard,
@@ -20,7 +20,7 @@ const primitiveMap = {
   dock: Dock,
   tool: ToolKit,
   lamp: Lamp,
-  gadget: Gadget,
+  gadget: Hub,
   hub: Hub,
 } as const;
 

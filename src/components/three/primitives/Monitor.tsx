@@ -64,8 +64,8 @@ function MonitorComponent(
           </mesh>
 
           {/* Front Power / Status LED Indicator */}
-          <mesh position={[0.82, -0.495, 0.026]}>
-            <cylinderGeometry args={[0.005, 0.005, 0.003, 12]} rotation={[Math.PI / 2, 0, 0]} />
+          <mesh position={[0.82, -0.495, 0.026]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.005, 0.005, 0.003, 12]} />
             <meshStandardMaterial color={detail} emissive={detail} emissiveIntensity={1.2} />
           </mesh>
         </group>

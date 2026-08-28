@@ -1,3 +1,5 @@
+"use client";
+
 import { homepageContent } from "@/content/homepage";
 import { ProductCardFromAPI } from "@/components/shared/ProductCardFromAPI";
 import { ButtonLink } from "@/components/ui/ButtonLink";
