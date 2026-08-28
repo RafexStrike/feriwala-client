@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { PublicRoute } from "@/components/customer/RouteGuards";
 import { toast } from "sonner";
+import { getAuthUrl } from "@/lib/auth/config";
 
 const resetPasswordSchema = z
   .object({
@@ -40,13 +41,10 @@ function ResetPasswordPageContent() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema),
   });
-
-  const password = watch("password");
 
   useEffect(() => {
     const resetToken = searchParams.get("token");
@@ -63,19 +61,19 @@ function ResetPasswordPageContent() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL || "https://feriwala-server.onrender.com"}/api/auth/reset-password`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ token, password: data.password }),
-        }
-      );
+      const response = await fetch(getAuthUrl('/api/auth/reset-password'), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          token,
+          newPassword: data.password,
+        }),
+      });
 
       const result = await response.json();
 
-      if (response.ok && result.success) {
+      if (response.ok && result.status === true) {
         setSuccess(true);
         toast.success("Password reset successful");
         setTimeout(() => router.push("/login"), 2000);

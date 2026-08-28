@@ -11,6 +11,7 @@ import { PageHeader } from "@/components/shared/PageHeader";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { PublicRoute } from "@/components/customer/RouteGuards";
 import { toast } from "sonner";
+import { getAuthUrl } from "@/lib/auth/config";
 
 function VerifyEmailPageContent() {
   const router = useRouter();
@@ -35,7 +36,7 @@ function VerifyEmailPageContent() {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/verify-email?token=${verificationToken}`,
+        `${getAuthUrl('/api/auth/verify-email')}?token=${verificationToken}`,
         {
           method: "GET",
           credentials: "include",
@@ -61,13 +62,10 @@ function VerifyEmailPageContent() {
 
   const resendVerification = async () => {
     try {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || "https://feriwala-server.onrender.com"}/api/auth/resend-verification`,
-        {
-          method: "POST",
-          credentials: "include",
-        }
-      );
+      await fetch(getAuthUrl('/api/auth/resend-verification'), {
+        method: "POST",
+        credentials: "include",
+      });
       toast.success("Verification email sent!");
       setCanResend(false);
       setTimeout(() => setCanResend(true), 60000);
