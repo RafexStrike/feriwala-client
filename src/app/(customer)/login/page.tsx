@@ -34,7 +34,10 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
 
   const handleGoogleLogin = async () => {
     try {
-      const callbackURL = redirectTo && redirectTo.startsWith('/') ? redirectTo : '/';
+      const callbackURL = new URL(
+        redirectTo && redirectTo.startsWith('/') ? redirectTo : '/',
+        window.location.origin
+      ).toString();
       console.info('[AUTH-CLIENT][DEBUG] start google sign-in', { callbackURL });
       await authClient.signIn.social({
         provider: 'google',

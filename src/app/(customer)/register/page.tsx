@@ -35,10 +35,11 @@ export default function RegisterPage() {
 
   const handleGoogleLogin = async () => {
     try {
-      console.info('[AUTH-CLIENT][DEBUG] start google sign-in (register)', { callbackURL: '/' });
+      const callbackURL = new URL('/', window.location.origin).toString();
+      console.info('[AUTH-CLIENT][DEBUG] start google sign-in (register)', { callbackURL });
       await authClient.signIn.social({
         provider: 'google',
-        callbackURL: '/',
+        callbackURL,
       });
       console.info('[AUTH-CLIENT][DEBUG] signIn.social returned (navigation likely happened)');
     } catch (err: any) {
