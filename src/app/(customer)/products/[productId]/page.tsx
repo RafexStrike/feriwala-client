@@ -22,7 +22,8 @@ export default async function ProductDetailPage({ params }: Props) {
 
 async function getProductServer(productId: string) {
   try {
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api/v1";
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL ||
+      (process.env.NODE_ENV !== 'production' ? 'http://localhost:5000/api/v1' : '');
     const response = await fetch(`${API_BASE}/products/${productId}`, {
       next: { revalidate: 60 },
       headers: { "Content-Type": "application/json" },
