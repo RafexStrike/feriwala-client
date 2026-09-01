@@ -97,7 +97,7 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
         <div>
           <div className="flex items-center justify-between">
             <Label htmlFor="password" className="block text-sm font-medium text-ink">Password</Label>
-            <Link href="/forgot-password" className="text-sm text-sky hover:underline">Forgot password?</Link>
+            {/* <Link href="/forgot-password" className="text-sm text-sky hover:underline">Forgot password?</Link> */}
           </div>
           <div className="relative mt-1">
             <Lock className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted" />
