@@ -42,6 +42,7 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
       await authClient.signIn.social({
         provider: 'google',
         callbackURL,
+        errorCallbackURL: new URL('/login', window.location.origin).toString(),
       });
       console.info('[AUTH-CLIENT][DEBUG] signIn.social returned (navigation likely happened)');
     } catch (err: any) {

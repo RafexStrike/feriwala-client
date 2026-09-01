@@ -40,6 +40,7 @@ export default function RegisterPage() {
       await authClient.signIn.social({
         provider: 'google',
         callbackURL,
+        errorCallbackURL: new URL('/register', window.location.origin).toString(),
       });
       console.info('[AUTH-CLIENT][DEBUG] signIn.social returned (navigation likely happened)');
     } catch (err: any) {
