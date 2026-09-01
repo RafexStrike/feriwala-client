@@ -23,6 +23,11 @@ export const getAuthUrl = (path: string) => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 
   if (!SERVER_BASE_URL) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error(
+        'NEXT_PUBLIC_API_URL must be set in production. Set it to your backend API domain (e.g., https://api.feriwala.com/api/v1).'
+      );
+    }
     return normalizedPath;
   }
 
