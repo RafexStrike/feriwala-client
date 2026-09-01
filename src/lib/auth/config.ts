@@ -1,3 +1,5 @@
+import { createAuthClient } from 'better-auth/react';
+
 const normalizeBaseUrl = (value: string | undefined) => {
   if (!value) return '';
   return value.trim().replace(/\/+$/, '');
@@ -18,6 +20,13 @@ export const SERVER_BASE_URL = normalizeBaseUrl(
     ? LOCAL_BACKEND_SERVER
     : ''
 );
+
+export const authClient = createAuthClient({
+  baseURL: SERVER_BASE_URL,
+  fetchOptions: {
+    credentials: 'include',
+  },
+});
 
 export const getAuthUrl = (path: string) => {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
