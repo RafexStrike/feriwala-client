@@ -21,6 +21,7 @@ import { toast } from "sonner";
 export default function RegisterPage() {
   const router = useRouter();
   const { register: registerUser } = useAuth();
+  const registrationEnabled = false;
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
 
@@ -52,6 +53,10 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterInput) => {
     setError("");
+    if (!registrationEnabled) {
+      setError('Sign-up is currently unavailable. Please use "Continue with Google" to create or access your account.');
+      return;
+    }
     try {
       await registerUser(data.name, data.email, data.password);
       router.push("/verify-email");
@@ -76,6 +81,13 @@ export default function RegisterPage() {
         )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-5">
+          {!registrationEnabled && (
+            <Alert className="mt-2">
+              <AlertDescription>
+                Sign-up is currently unavailable. Please use "Continue with Google" to create or access your account.
+              </AlertDescription>
+            </Alert>
+          )}
           <div>
             <Label htmlFor="name" className="block text-sm font-medium text-ink">Full Name</Label>
             <div className="relative mt-1">
@@ -86,7 +98,7 @@ export default function RegisterPage() {
                 placeholder="John Doe"
                 className="pl-10"
                 {...register("name")}
-                disabled={isSubmitting}
+                disabled={!registrationEnabled || isSubmitting}
               />
             </div>
             {errors.name && (
@@ -104,7 +116,7 @@ export default function RegisterPage() {
                 placeholder="you@example.com"
                 className="pl-10"
                 {...register("email")}
-                disabled={isSubmitting}
+                disabled={!registrationEnabled || isSubmitting}
               />
             </div>
             {errors.email && (
@@ -122,7 +134,7 @@ export default function RegisterPage() {
                 placeholder="••••••••"
                 className="pl-10 pr-10"
                 {...register("password")}
-                disabled={isSubmitting}
+                disabled={!registrationEnabled || isSubmitting}
               />
               <button
                 type="button"
@@ -148,7 +160,7 @@ export default function RegisterPage() {
                 placeholder="••••••••"
                 className="pl-10 pr-10"
                 {...register("confirmPassword")}
-                disabled={isSubmitting}
+                disabled={!registrationEnabled || isSubmitting}
               />
             </div>
             {errors.confirmPassword && (
@@ -156,7 +168,7 @@ export default function RegisterPage() {
             )}
           </div>
 
-          <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+          <Button type="submit" className="w-full" size="lg" disabled={!registrationEnabled || isSubmitting}>
             {isSubmitting ? "Creating account..." : "Create Account"}
           </Button>
         </form>
@@ -170,12 +182,16 @@ export default function RegisterPage() {
             className="gap-2"
             onClick={handleGoogleLogin}
           >
-            <svg className="h-5 w-5" viewBox="0 0 24 24"><path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg>
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill="currentColor" d="M21.35 11.1h-9.17v2.99h5.26c-.23 1.48-1.43 4.33-5.26 4.33-3.17 0-5.75-2.62-5.75-5.84s2.58-5.84 5.75-5.84c1.8 0 3.01.77 3.71 1.44l2.53-2.44C17.2 2.1 15.25 1 12.17 1 6.89 1 2.67 5.33 2.67 10.29s4.22 9.29 9.5 9.29c5.47 0 8.99-3.83 8.99-9.16 0-.62-.07-1.12-.81-2.02z"/>
+            </svg>
             Google
           </Button>
           <Button variant="outline" className="gap-2" disabled>
-            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.605-.015 2.896-.015 3.286 0 .318.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub
+            <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22 12.07C22 6.48 17.52 2 11.93 2S2 6.48 2 12.07C2 17.09 5.66 21.19 10.44 22v-7.01H8.08v-2.92h2.36V10.6c0-2.33 1.39-3.62 3.52-3.62 1.02 0 2.09.18 2.09.18v2.29h-1.18c-1.16 0-1.52.72-1.52 1.46v1.76h2.59l-.41 2.92h-2.18V22C18.34 21.19 22 17.09 22 12.07z"/>
+            </svg>
+            Facebook
           </Button>
         </div>
 
