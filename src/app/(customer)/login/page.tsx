@@ -131,6 +131,7 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
 
       <div className="grid grid-cols-2 gap-3">
         <Button
+          type="button"
           variant="outline"
           className="gap-2"
           onClick={handleGoogleLogin}
