@@ -25,6 +25,16 @@ export const authClient = createAuthClient({
   baseURL: SERVER_BASE_URL,
   fetchOptions: {
     credentials: 'include',
+    onRequest: (ctx) => {
+      try {
+        console.info('[AUTH-CLIENT][DEBUG] request', ctx);
+      } catch (e) {}
+    },
+    onResponse: (ctx) => {
+      try {
+        console.info('[AUTH-CLIENT][DEBUG] response', ctx);
+      } catch (e) {}
+    }
   },
 });
 

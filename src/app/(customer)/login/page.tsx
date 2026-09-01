@@ -35,10 +35,12 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
   const handleGoogleLogin = async () => {
     try {
       const callbackURL = redirectTo && redirectTo.startsWith('/') ? redirectTo : '/';
+      console.info('[AUTH-CLIENT][DEBUG] start google sign-in', { callbackURL });
       await authClient.signIn.social({
         provider: 'google',
         callbackURL,
       });
+      console.info('[AUTH-CLIENT][DEBUG] signIn.social returned (navigation likely happened)');
     } catch (err: any) {
       toast.error(err?.message || 'Unable to start Google sign-in');
     }
