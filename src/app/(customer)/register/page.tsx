@@ -35,10 +35,9 @@ export default function RegisterPage() {
 
   const handleGoogleLogin = async () => {
     try {
-      const callbackURL = new URL('/', window.location.origin).toString();
       await authClient.signIn.social({
         provider: 'google',
-        callbackURL,
+        callbackURL: '/',
       });
     } catch (err: any) {
       toast.error(err?.message || 'Unable to start Google sign-in');

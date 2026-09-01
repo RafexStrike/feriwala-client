@@ -13,7 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { PageHeader } from "@/components/shared/PageHeader";
 import { useAuth } from "@/lib/auth/AuthProvider";
-import { authClient, getAuthUrl } from "@/lib/auth/config";
+import { authClient } from "@/lib/auth/config";
 import { loginSchema, type LoginInput } from "@/lib/utils/validation";
 import { PublicRoute } from "@/components/customer/RouteGuards";
 import { toast } from "sonner";
@@ -34,7 +34,7 @@ function LoginForm({ redirectTo }: { redirectTo: string }) {
 
   const handleGoogleLogin = async () => {
     try {
-      const callbackURL = new URL(redirectTo || '/', window.location.origin).toString();
+      const callbackURL = redirectTo && redirectTo.startsWith('/') ? redirectTo : '/';
       await authClient.signIn.social({
         provider: 'google',
         callbackURL,
