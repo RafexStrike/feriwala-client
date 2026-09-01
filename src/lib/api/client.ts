@@ -1,7 +1,10 @@
 import { ApiError, type ApiResponse, type ProductQueryParams } from './types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ||
-  (process.env.NODE_ENV !== 'production' ? 'http://localhost:5000/api/v1' : '');
+// Use the same-origin Next.js proxy in production so browser cookies are
+// sent with protected API requests. Keep direct localhost access for dev.
+const API_BASE_URL = process.env.NODE_ENV === 'production'
+  ? '/api/v1'
+  : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1';
 
 function getAuthHeaders(): HeadersInit {
   return {
