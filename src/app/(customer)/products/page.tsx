@@ -159,7 +159,7 @@ function ProductsContent() {
       </div>
 
       <div className={cn("mt-10 grid gap-6", isSidebarCollapsed ? "lg:grid-cols-[0_minmax(0,1fr)]" : "lg:grid-cols-[260px_minmax(0,1fr)]")}>
-        <aside className={cn("min-w-0 transition-all duration-200", isSidebarCollapsed && "hidden lg:block lg:w-0 lg:overflow-hidden")}>
+        <aside className={cn("hidden min-w-0 transition-all duration-200 lg:block", isSidebarCollapsed && "lg:w-0 lg:overflow-hidden")}>
           {!isSidebarCollapsed && (
             <ProductFilters
               categories={categories}
