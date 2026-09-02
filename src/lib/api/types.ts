@@ -139,6 +139,15 @@ export interface NotificationRecipient {
   updatedAt: string;
 }
 
+export interface PushSubscriptionInput {
+  endpoint: string;
+  expirationTime?: number | null;
+  keys: {
+    auth: string;
+    p256dh: string;
+  };
+}
+
 // Admin types
 export interface DashboardData {
   users: number;

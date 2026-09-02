@@ -18,6 +18,7 @@ import type {
   StatusUpdateInput,
   NotificationEmailInput,
   ManualOrderInput,
+  PushSubscriptionInput,
 } from '@/types/api';
 
 // Dashboard & Analytics
@@ -151,4 +152,19 @@ export async function updateNotificationEmail(recipientId: string, data: Partial
 
 export async function deleteNotificationEmail(recipientId: string) {
   return apiClient.delete<{ message: string }>(`/admin/notification-emails/${recipientId}`);
+}
+
+// Push notifications
+export async function getPushConfig() {
+  return apiClient.get<{ publicKey: string }>(`/admin/push-config`);
+}
+
+export async function registerPushSubscription(data: PushSubscriptionInput) {
+  return apiClient.post(`/admin/push-subscriptions`, data);
+}
+
+export async function unregisterPushSubscription(data: { endpoint: string }) {
+  return apiClient.delete<{ message: string }>(`/admin/push-subscriptions`, {
+    body: JSON.stringify(data),
+  });
 }

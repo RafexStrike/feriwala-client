@@ -3,6 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 import type { User } from '@/types/api';
 import { API_BASE_URL, getAuthUrl } from '@/lib/auth/config';
+import { disableBrowserPushNotifications } from '@/lib/push/browserPush';
 
 interface AuthContextType {
   user: User | null;
@@ -85,6 +86,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    await disableBrowserPushNotifications().catch(() => undefined);
     await fetch(getAuthUrl('/api/auth/sign-out'), {
       method: 'POST',
       credentials: 'include',

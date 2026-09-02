@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/lib/auth/AuthProvider";
 import { getInitials } from "@/lib/utils/format";
+import { AdminPushNotificationsButton } from "@/components/admin/AdminPushNotificationsButton";
 
 const navigation = [
   { name: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -132,6 +133,8 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
           </button>
 
           <div className="flex-1" />
+
+          <AdminPushNotificationsButton />
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

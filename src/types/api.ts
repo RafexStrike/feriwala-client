@@ -203,6 +203,15 @@ export interface NotificationRecipient {
   updatedAt: string;
 }
 
+export interface PushSubscriptionInput {
+  endpoint: string;
+  expirationTime?: number | null;
+  keys: {
+    auth: string;
+    p256dh: string;
+  };
+}
+
 export interface AnalyticsSummary {
   totals: {
     revenue: number;
