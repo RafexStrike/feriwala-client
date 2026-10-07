@@ -10,8 +10,9 @@ const config: Config = {
   			surface: '#fbf7f1',
   			ink: '#171410',
   			muted: '#6d655d',
-  			line: 'rgba(23, 20, 16, 0.12)',
-  			sky: '#6b98b5',
+  			line: 'rgba(23, 20, 16, 0.12)',  			orange: '#f58c4c',
+  			coral: '#f46764',
+  			blue: '#37aff5',  			sky: '#6b98b5',
   			clay: '#c8857b',
   			honey: '#d2926f',
   			// Dark mode surfaces

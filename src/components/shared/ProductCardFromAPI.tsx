@@ -18,55 +18,59 @@ export function ProductCardFromAPI({ product, className }: ProductCardFromAPIPro
     ...product.categories.map((c) => c.name),
     ...product.tags.map((t) => t.name),
   ].slice(0, 3);
+  const accents = ["#f58c4c", "#f46764", "#37aff5"];
+  const accent = accents[(product.name.length + product.price) % accents.length];
 
   return (
     <Link
       href={`/products/${product._id}`}
       className={cn(
-        "group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-line bg-surface p-4 shadow-soft transition-transform duration-300 hover:-translate-y-1 hover:border-ink/15 sm:p-5",
-        className
+        "group block h-full overflow-hidden rounded-[1.8rem] border border-line/80 bg-white/20 p-3 transition-all duration-300 hover:-translate-y-1 hover:border-ink/20 sm:p-4",
+        className,
       )}
     >
-      <div className="flex items-center justify-between gap-3">
-        <span className="rounded-full border border-line px-2.5 py-1 text-[0.65rem] uppercase tracking-[0.22em] text-muted sm:px-3 sm:text-[0.7rem]">
-          {category?.name || "Uncategorized"}
-        </span>
-        <span className="text-xs text-ink/70 sm:text-sm">{formatCurrency(product.price)}</span>
-      </div>
-      <div className="mt-4 flex flex-1 flex-col sm:mt-5">
-        <div
-          className="relative mb-4 aspect-[4/3] overflow-hidden rounded-[1.35rem] border border-line/70 bg-gradient-to-br sm:mb-6"
-          style={{
-            backgroundImage: image
-              ? `url(${image})`
-              : `linear-gradient(145deg, rgba(255,255,255,0.88), #6b98b518)`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        >
+      <div className="relative overflow-hidden rounded-[1.45rem] border border-line/80 bg-surface">
+        <div className="absolute inset-x-4 top-4 z-10 flex items-center justify-between gap-3">
+          <span className="rounded-full border border-white/60 bg-white/70 px-2.5 py-1 text-[0.6rem] uppercase tracking-[0.22em] text-ink/70 backdrop-blur-sm">
+            {category?.name || "Uncategorized"}
+          </span>
+          <span className="rounded-full bg-white/75 px-2.5 py-1 text-[0.7rem] font-medium text-ink shadow-sm">
+            {formatCurrency(product.price)}
+          </span>
+        </div>
+
+        <div className="relative aspect-[4/5] overflow-hidden">
           {image && (
             <Image
               src={image}
               alt={product.name}
               fill
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, 220px"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, 33vw"
             />
           )}
         </div>
-        <h3 className="font-display text-xl leading-none tracking-[-0.02em] text-ink sm:text-2xl">{product.name}</h3>
-        <p className="mt-3 text-sm leading-6 text-muted">{product.briefDescription}</p>
       </div>
-      <div className="mt-4 flex flex-wrap gap-2 sm:mt-5">
+
+      <div className="mt-5 flex items-start justify-between gap-4">
+        <div>
+          <p className="text-[0.65rem] uppercase tracking-[0.22em] text-muted">Featured</p>
+          <h3 className="mt-2 font-display text-[clamp(2rem,3vw,2.7rem)] leading-none text-ink">
+            {product.name}
+          </h3>
+        </div>
+        <span className="mt-1 h-2.5 w-2.5 rounded-full" style={{ backgroundColor: accent }} />
+      </div>
+
+      <p className="mt-3 text-sm leading-7 text-muted">{product.briefDescription}</p>
+
+      <div className="mt-4 flex flex-wrap gap-2">
         {chips.map((chip) => (
-          <span key={chip} className="rounded-full border border-line bg-canvas px-2.5 py-1 text-[10px] text-muted sm:text-xs">
+          <span key={chip} className="rounded-full border border-line bg-white/45 px-2.5 py-1 text-[10px] uppercase tracking-[0.15em] text-ink/70">
             {chip}
           </span>
         ))}
       </div>
-      <span className="mt-5 inline-flex items-center text-sm text-ink/80 transition-transform duration-300 group-hover:translate-x-1 sm:mt-6">
-        View product
-      </span>
     </Link>
   );
 }

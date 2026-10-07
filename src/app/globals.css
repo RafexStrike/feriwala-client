@@ -20,7 +20,7 @@ body {
 }
 
 ::selection {
-  background: rgba(107, 152, 181, 0.24);
+  background: rgba(55, 175, 245, 0.22);
   color: #171410;
 }
 
@@ -33,8 +33,43 @@ body {
   background-size: 18px 18px;
 }
 
+.brand-motif {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 2.8rem;
+  height: 0.85rem;
+}
+
+.brand-motif span {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  flex: 1 1 0;
+  transition: transform 250ms ease;
+}
+
+.section-kicker {
+  font-size: 0.7rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(23, 20, 16, 0.72);
+}
+
+.editorial-headline {
+  font-family: var(--font-instrument-serif), Georgia, serif;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+}
+
+.editorial-rhythm {
+  border-top: 1px solid rgba(23, 20, 16, 0.12);
+  border-bottom: 1px solid rgba(23, 20, 16, 0.12);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 }
+
